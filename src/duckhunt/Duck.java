@@ -20,8 +20,8 @@ public class Duck {
     private int xPos = 10;
     private int yPos = 500;
     private static final int RADIUS = 20;
-    private int xSpeed = 5;
-    private int ySpeed = -2;
+    private int xSpeed = 20;
+    private int ySpeed = -8;
     private int lastChange = 10;
     private boolean hit = false;
 
@@ -54,19 +54,19 @@ public class Duck {
         if (i < 5){
             //verander x richting
             if (xSpeed> 0){
-                xSpeed = -5;
+                xSpeed = -20;
             }
             else {
-                xSpeed = 5;
+                xSpeed = 20;
             }
         }
         else if (i > 4){
             //verander richting y
             if (ySpeed > 0){
-                ySpeed = -2;
+                ySpeed = -8;
             }
             else {
-                ySpeed = 2;
+                ySpeed = 8;
             }
         }
     }
