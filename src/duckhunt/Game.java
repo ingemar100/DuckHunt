@@ -100,18 +100,20 @@ class AnimationPanel extends JPanel {
         time++;
 
         for (Duck duck : ducks) {
-            duck.update();
-            duck.draw(g);
             if (shooting) {
 //                System.out.println("Shooting: " + shotLocation.x + ", " + shotLocation.y);
 //                System.out.println("Duck: " + duck.getXPos() + ", " + duck.getYPos());
-                if (shotLocation.x > duck.getXPos() && shotLocation.x < (duck.getXPos() + 2 * duck.getRadius()) 
-                        && shotLocation.y > duck.getYPos() && shotLocation.y < (duck.getYPos() + 2 * duck.getRadius())){
+                if (shotLocation.x > (duck.getXPos() - duck.getRadius())  && shotLocation.x < duck.getXPos() + duck.getRadius()
+                        && shotLocation.y > (duck.getYPos() - duck.getRadius()) && shotLocation.y < duck.getYPos() + duck.getRadius()){
                     System.out.println("geraakt");
                     duck.hit();
                 }
             }
+            duck.update();
+            duck.draw(g);
+            //controleer of eend buiten scherm is
         }
         shooting = false;
+        System.out.println("Aantal eenden actief: " + ducks.size());
     }
 }

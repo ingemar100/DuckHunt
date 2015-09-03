@@ -21,7 +21,7 @@ public class Duck {
     private int yPos = 500;
     private static final int RADIUS = 20;
     private int xSpeed = 5;
-    private int ySpeed = -5;
+    private int ySpeed = -2;
     private int lastChange = 10;
     private boolean hit = false;
 
@@ -63,10 +63,10 @@ public class Duck {
         else if (i > 4){
             //verander richting y
             if (ySpeed > 0){
-                ySpeed = -5;
+                ySpeed = -2;
             }
             else {
-                ySpeed = 5;
+                ySpeed = 2;
             }
         }
     }
