@@ -61,6 +61,7 @@ class AnimationPanel extends JPanel {
     private Point shotLocation;
     private JLabel scoreLabel = new JLabel("0");
     private int score = 0;
+    private static final int KILL_POINTS = 100;
 
     public AnimationPanel() {
         setBackground(Color.blue);
@@ -93,7 +94,7 @@ class AnimationPanel extends JPanel {
             time = 50 + i;
         }
         time++;
-
+        scoreLabel.setText(score + "");
         Rectangle bounds = this.getBounds();
         int h = bounds.height;
         int w = bounds.width;
@@ -110,6 +111,8 @@ class AnimationPanel extends JPanel {
                             && shotLocation.y > (duck.getYPos() - duck.getRadius()) && shotLocation.y < duck.getYPos() + duck.getRadius()) {
                         System.out.println("geraakt");
                         duck.hit();
+                        deadDucks.add(duck);
+                        score += KILL_POINTS;
                     }
                 }
                 duck.update();
