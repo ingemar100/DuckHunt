@@ -62,9 +62,13 @@ class AnimationPanel extends JPanel {
     private JLabel scoreLabel = new JLabel("0");
     private int score = 0;
     private static final int KILL_POINTS = 100;
-
+    
+    private Image backgroundImage;
+    
     public AnimationPanel() {
-        setBackground(Color.blue);
+        backgroundImage = new ImageIcon(getClass().getResource("background.png")).getImage();
+        
+        //setBackground(Color.blue);
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 shooting = true;
@@ -85,6 +89,8 @@ class AnimationPanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
+        g.drawImage(backgroundImage,0,0,getWidth(),getHeight(),null);
+        
         if (time > 200) {
             Duck d = new Duck();
             ducks.add(d);
