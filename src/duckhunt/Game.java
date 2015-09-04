@@ -90,9 +90,9 @@ class AnimationPanel extends JPanel {
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.drawImage(backgroundImage, 0,0,getWidth(), getHeight(), null);
-        addDucks();
         scoreLabel.setText(score + "");
         getScreenSize();
+        addDucks();
         
         ArrayList<Duck> deadDucks = new ArrayList();
         for (Duck duck : ducks) {
@@ -121,7 +121,7 @@ class AnimationPanel extends JPanel {
     
     private void addDucks(){
         if (time > 200) {
-            Duck d = new Duck();
+            Duck d = new Duck(width / 2, (int) (height * 0.7));
             ducks.add(d);
             Random rn = new Random();
             int n = 200 - 50 + 1;

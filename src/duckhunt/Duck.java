@@ -17,14 +17,29 @@ import java.util.Random;
  */
 public class Duck {
 
-    private int xPos = 10;
+    private int xPos;
     private int yPos = 500;
     private static final int RADIUS = 40;
-    private int xSpeed = 20;
-    private int ySpeed = -8;
+    private static final int LEFT_SPEED = -20;
+    private static final int RIGHT_SPEED = 20;
+    private static final int UP_SPEED = -8;
+    private static final int DOWN_SPEED = 8;
+    
+    private int xSpeed = RIGHT_SPEED;
+    private int ySpeed = UP_SPEED;
+    private int maxY;
     private int lastChange = 10;
     private boolean hit = false;
 
+    public Duck (int initialX, int initialY){
+        xPos = initialX;
+        yPos = initialY;
+        lastChange = initialX;
+        maxY = initialY;
+        
+        changeDirection();
+    }
+    
     public int getXPos(){
         return xPos;
     }
@@ -53,21 +68,24 @@ public class Duck {
         System.out.println(i);
         if (i < 5){
             //verander x richting
-            if (xSpeed> 0){
-                xSpeed = -20;
+            if (xSpeed == RIGHT_SPEED){
+                xSpeed = LEFT_SPEED;
             }
             else {
-                xSpeed = 20;
+                xSpeed = RIGHT_SPEED;
             }
         }
         else if (i > 4){
             //verander richting y
-            if (ySpeed > 0){
-                ySpeed = -8;
+            if (ySpeed == DOWN_SPEED){
+                ySpeed = UP_SPEED;
             }
             else {
-                ySpeed = 8;
+                ySpeed = DOWN_SPEED;
             }
+        }
+        if (yPos >= maxY){
+            ySpeed = UP_SPEED;
         }
     }
     
