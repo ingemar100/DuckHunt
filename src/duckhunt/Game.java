@@ -12,9 +12,10 @@ public class Game {
     private static final Dimension SIZE = new Dimension(600, 600);
     static AnimationPanel panel = new AnimationPanel();
     private static final int TIMER_DELAY = 20;
+    private static final String GAME_NAME = "DuckDuckHunt";
 
     private static void createAndShowUI() {
-        JFrame frame = new JFrame("SimpleSwingAnimation");
+        JFrame frame = new JFrame(GAME_NAME);
         frame.getContentPane().add(panel);
         frame.getContentPane().setPreferredSize(SIZE);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,6 +63,8 @@ class AnimationPanel extends JPanel {
     private JLabel scoreLabel = new JLabel("0");
     private int score = 0;
     private static final int KILL_POINTS = 100;
+    private int height;
+    private int width;
 
     public AnimationPanel() {
         setBackground(Color.blue);
@@ -78,31 +81,19 @@ class AnimationPanel extends JPanel {
     @Override
     // override a Swing JComponent's paintComponent, not the paint method
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); // again to repaint the screen
-        // set antialiasing rendering hints to smooth out the circle
-        // this is not necessary but makes for prettier animation
+        super.paintComponent(g); 
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        if (time > 200) {
-            Duck d = new Duck();
-            ducks.add(d);
-            Random rn = new Random();
-            int n = 200 - 50 + 1;
-            int i = rn.nextInt() % n;
-            time = 50 + i;
-        }
-        time++;
+        addDucks();
         scoreLabel.setText(score + "");
-        Rectangle bounds = this.getBounds();
-        int h = bounds.height;
-        int w = bounds.width;
+        getScreenSize();
         
         ArrayList<Duck> deadDucks = new ArrayList();
         for (Duck duck : ducks) {
             //controleer of eend buiten scherm is
-            if (duck.getXPos() < 0 || duck.getXPos() > w || duck.getYPos() < 0 || duck.getYPos() > h){
+            if (isOnScreen(duck.getXPos(), duck.getYPos())){
                 deadDucks.add(duck);
             }
             else {
@@ -122,5 +113,27 @@ class AnimationPanel extends JPanel {
         ducks.removeAll(deadDucks);
         shooting = false;
         System.out.println("Aantal eenden actief: " + ducks.size());
+    }
+    
+    private void addDucks(){
+        if (time > 200) {
+            Duck d = new Duck();
+            ducks.add(d);
+            Random rn = new Random();
+            int n = 200 - 50 + 1;
+            int i = rn.nextInt() % n;
+            time = 50 + i;
+        }
+        time++;
+    }
+    
+    private void getScreenSize(){
+        Rectangle bounds = this.getBounds();
+        height = bounds.height;
+        width = bounds.width;
+    }
+    
+    private boolean isOnScreen(int x, int y){
+        return x < 0 || x > width || y < 0 || y > height;
     }
 }

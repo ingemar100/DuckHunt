@@ -19,7 +19,7 @@ public class Duck {
 
     private int xPos = 10;
     private int yPos = 500;
-    private static final int RADIUS = 20;
+    private static final int RADIUS = 40;
     private int xSpeed = 20;
     private int ySpeed = -8;
     private int lastChange = 10;
