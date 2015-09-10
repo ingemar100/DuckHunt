@@ -2,9 +2,13 @@ package duckhunt;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import javafx.application.Application;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Game {
@@ -42,6 +46,7 @@ public class Game {
             }
         };
         threadForInitGame.start();
+        Sound.BACKGROUND.loop();
     }
 
     public static void update() {
@@ -79,6 +84,7 @@ class AnimationPanel extends JPanel {
         });
         this.add(new JLabel("Score: "));
         this.add(scoreLabel);
+
     }
 
     @Override
@@ -89,7 +95,7 @@ class AnimationPanel extends JPanel {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
-        g.drawImage(backgroundImage, 0,0,getWidth(), getHeight(), null);
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
         scoreLabel.setText(score + "");
         getScreenSize();
         addDucks();
@@ -97,8 +103,9 @@ class AnimationPanel extends JPanel {
         ArrayList<Duck> deadDucks = new ArrayList();
         for (Duck duck : ducks) {
             //controleer of eend buiten scherm is
-            if (isOnScreen(duck.getXPos(), duck.getYPos())){
+            if (isOffscreen(duck.getXPos(), duck.getYPos())){
                 deadDucks.add(duck);
+                Sound.OFFSCREEN.play();
             }
             else {
                 if (shooting) {
@@ -116,7 +123,7 @@ class AnimationPanel extends JPanel {
         }
         ducks.removeAll(deadDucks);
         shooting = false;
-        System.out.println("Aantal eenden actief: " + ducks.size());
+        //System.out.println("Aantal eenden actief: " + ducks.size());
     }
     
     private void addDucks(){
@@ -137,7 +144,7 @@ class AnimationPanel extends JPanel {
         width = bounds.width;
     }
     
-    private boolean isOnScreen(int x, int y){
+    private boolean isOffscreen(int x, int y){
         return x < 0 || x > width || y < 0 || y > height;
     }
 }
