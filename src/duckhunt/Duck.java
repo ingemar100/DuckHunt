@@ -10,6 +10,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -91,6 +93,18 @@ public class Duck {
     
     public void hit(){
         hit = true;
+        Thread soundThread = new Thread() {
+            public void run() {
+                Sound.SHOT.play();
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Duck.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Sound.COCK.play();
+            }
+        };
+        soundThread.start();
     }
 
     protected void draw(Graphics g) {

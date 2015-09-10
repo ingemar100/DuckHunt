@@ -26,6 +26,7 @@ public class Game {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        Sound.BACKGROUND.loop();
     }
 
     public static void main(String[] args) {
@@ -46,7 +47,6 @@ public class Game {
             }
         };
         threadForInitGame.start();
-        Sound.BACKGROUND.loop();
     }
 
     public static void update() {
