@@ -50,7 +50,7 @@ public class Game {
     }
 
     public static void update() {
-        
+
     }
 
     public static void render() {
@@ -70,11 +70,17 @@ class AnimationPanel extends JPanel {
     private static final int KILL_POINTS = 100;
     private int height;
     private int width;
-    
+    private Goku goku = new Goku();
+    private Dog dog = new Dog();
+    private Blanka blanka = new Blanka();
+
     private Image backgroundImage;
 
     public AnimationPanel() {
         backgroundImage = new ImageIcon(getClass().getResource("background.png")).getImage();
+
+        Cursor cursor = Cursor.getPredefinedCursor(Cursor.CROSSHAIR_CURSOR);
+        setCursor(cursor);
 
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
@@ -90,7 +96,7 @@ class AnimationPanel extends JPanel {
     @Override
     // override a Swing JComponent's paintComponent, not the paint method
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); 
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -99,15 +105,20 @@ class AnimationPanel extends JPanel {
         scoreLabel.setText(score + "");
         getScreenSize();
         addDucks();
-        
+        goku.update();
+        goku.draw(g);
+        dog.update();
+        dog.draw(g);
+        blanka.update();
+        blanka.draw(g);
+
         ArrayList<Duck> deadDucks = new ArrayList();
         for (Duck duck : ducks) {
             //controleer of eend buiten scherm is
-            if (isOffscreen(duck.getXPos(), duck.getYPos())){
+            if (isOffscreen(duck.getXPos(), duck.getYPos())) {
                 deadDucks.add(duck);
                 Sound.OFFSCREEN.play();
-            }
-            else {
+            } else {
                 if (shooting) {
                     if (shotLocation.x > (duck.getXPos() - duck.getRadius()) && shotLocation.x < duck.getXPos() + duck.getRadius()
                             && shotLocation.y > (duck.getYPos() - duck.getRadius()) && shotLocation.y < duck.getYPos() + duck.getRadius()) {
@@ -125,8 +136,8 @@ class AnimationPanel extends JPanel {
         shooting = false;
         //System.out.println("Aantal eenden actief: " + ducks.size());
     }
-    
-    private void addDucks(){
+
+    private void addDucks() {
         if (time > 200) {
             Duck d = new Duck(width / 2, (int) (height * 0.7));
             ducks.add(d);
@@ -137,14 +148,14 @@ class AnimationPanel extends JPanel {
         }
         time++;
     }
-    
-    private void getScreenSize(){
+
+    private void getScreenSize() {
         Rectangle bounds = this.getBounds();
         height = bounds.height;
         width = bounds.width;
     }
-    
-    private boolean isOffscreen(int x, int y){
+
+    private boolean isOffscreen(int x, int y) {
         return x < 0 || x > width || y < 0 || y > height;
     }
 }
