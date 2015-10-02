@@ -10,11 +10,11 @@ public class Game {
     private static final int TIMER_DELAY = 20;
     private static final String GAME_NAME = "DuckDuckHunt";
     private static final double FPS = 60;
-    private static DuckManager dm;
+    private static UnitManager dm;
 
     private static void createAndShowUI() {
         panel = new AnimationPanel();
-        dm = new DuckManager(panel);
+        dm = new UnitManager(panel);
         panel.setManager(dm);
         
         JFrame frame = new JFrame(GAME_NAME);

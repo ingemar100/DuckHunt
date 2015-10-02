@@ -1,35 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package duckhunt;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
-/**
- *
- * @author Selman
- */
-public class Goku {
+public class Goku extends Unit {
 
-    private int xPos = -2000;
-    private int yPos = 500;
-    private static final int RIGHT_SPEED = 15;
-    private int xSpeed = RIGHT_SPEED;
+    public Goku(int initialX, int initialY) {
+        super(initialX, initialY);
 
-    private Image goku;
+        image = new ImageIcon(getClass().getResource("Images/goku.gif")).getImage();
 
-    public void update() {
-        xPos += xSpeed;
     }
 
-    protected void draw(Graphics g) {
-        goku = new ImageIcon(getClass().getResource("Images/goku.gif")).getImage();
-
-        g.drawImage(goku, xPos, yPos, 200, 200, null);
-
+    @Override
+    protected void move() {
+        ySpeed = 0;
+        xSpeed = RIGHT_SPEED;
     }
 }

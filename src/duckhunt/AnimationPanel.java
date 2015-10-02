@@ -20,7 +20,7 @@ public class AnimationPanel extends JPanel {
     private JLabel scoreLabel = new JLabel("0");
     private int score = 0;
     private List<ShootingListener> shootingListeners = new ArrayList();
-    private DuckManager dm;
+    private UnitManager dm;
 
     private Image backgroundImage;
 
@@ -39,7 +39,7 @@ public class AnimationPanel extends JPanel {
         this.add(scoreLabel);
     }
 
-    public void setManager(DuckManager dm) {
+    public void setManager(UnitManager dm) {
         this.dm = dm;
     }
 
@@ -58,15 +58,9 @@ public class AnimationPanel extends JPanel {
 
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 
-        List<Duck> ducks = dm.getDucks();
-        for (Duck d : ducks) {
-            d.draw(g);
+        List<Unit> units = dm.getUnits();
+        for (Unit u : units) {
+            u.draw(g);
         }
-    }
-
-    private Duck d;
-
-    public void setDuck(Duck d) {
-        this.d = d;
     }
 }

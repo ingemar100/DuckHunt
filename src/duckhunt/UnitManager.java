@@ -1,58 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package duckhunt;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- *
- * @author Ingemar
- */
-public class DuckManager implements ShootingListener{
+public class UnitManager implements ShootingListener{
     
-    private static ArrayList<Duck> ducks = new ArrayList();
+    private static ArrayList<Unit> units = new ArrayList();
     private static int time = 0;
     private static final int KILL_POINTS = 100;
     private static boolean shooting;
     private static Point shotLocation;
     private AnimationPanel panel;
     
-    public DuckManager(AnimationPanel panelParam){
+    public UnitManager(AnimationPanel panelParam){
         panel = panelParam;
+        openingScene();
     }
 
     public void update() {
         addDucks();
-        ArrayList<Duck> deadDucks = new ArrayList();
-        for (Duck duck : ducks) {
+        ArrayList<Unit> deadUnits = new ArrayList();
+        for (Unit unit : units) {
             //controleer of eend buiten scherm is
-            if (isOffscreen(duck.getXPos(), duck.getYPos())) {
-                deadDucks.add(duck);
+            if (isOffscreen(unit.getXPos(), unit.getYPos())) {
+                deadUnits.add(unit);
                 Sound.OFFSCREEN.play();
             } else {
                 if (shooting) {
-                    if (shotLocation.x > (duck.getXPos() - duck.getRadius()) && shotLocation.x < duck.getXPos() + duck.getRadius()
-                            && shotLocation.y > (duck.getYPos() - duck.getRadius()) && shotLocation.y < duck.getYPos() + duck.getRadius()) {
+                    if (shotLocation.x > (unit.getXPos() - unit.getRadius()) && shotLocation.x < unit.getXPos() + unit.getRadius()
+                            && shotLocation.y > (unit.getYPos() - unit.getRadius()) && shotLocation.y < unit.getYPos() + unit.getRadius()) {
                         System.out.println("geraakt");
-                        duck.hit();
-                        deadDucks.add(duck);
+                        unit.hit();
+                        deadUnits.add(unit);
                         panel.addScore(KILL_POINTS);
                     }
                 }
-                duck.update();
+                unit.update();
             }
         }
-        ducks.removeAll(deadDucks);
+        units.removeAll(deadUnits);
         shooting = false;
     }
 
-    public ArrayList<Duck> getDucks(){
-        return ducks;
+    public ArrayList<Unit> getUnits(){
+        return units;
     }
     
     public void render() {  
@@ -64,7 +56,7 @@ public class DuckManager implements ShootingListener{
         if (time > 200) {
             System.out.println("addDuck");
             Duck d = new Duck(panel.getWidth() / 2, (int) (panel.getHeight() * 0.7));
-            ducks.add(d);
+            units.add(d);
             Random rn = new Random();
             int n = 200 - 50 + 1;
             int i = rn.nextInt() % n;
@@ -81,5 +73,12 @@ public class DuckManager implements ShootingListener{
     public void shoot(Point p) {
         shooting = true;
         shotLocation = p;
+    }
+    
+    public void openingScene(){
+        Dog dog = new Dog(0,400);
+        units.add(dog);
+
+        
     }
 }
