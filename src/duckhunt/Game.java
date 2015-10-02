@@ -10,12 +10,12 @@ public class Game {
     private static final int TIMER_DELAY = 20;
     private static final String GAME_NAME = "DuckDuckHunt";
     private static final double FPS = 60;
-    private static UnitManager dm;
+    private static UnitManager um;
 
     private static void createAndShowUI() {
         panel = new AnimationPanel();
-        dm = new UnitManager(panel);
-        panel.setManager(dm);
+        um = new UnitManager(panel);
+        panel.setManager(um);
         
         JFrame frame = new JFrame(GAME_NAME);
         frame.getContentPane().add(panel);
@@ -68,12 +68,10 @@ public class Game {
     }
 
     public static void update() {
-        System.out.println("update");
-        dm.update();
+        um.update();
     }
 
     public static void render() {
-        System.out.println("render");
-        dm.render();
+        um.render();
     }
 }

@@ -13,6 +13,8 @@ public class UnitManager implements ShootingListener{
     private static Point shotLocation;
     private AnimationPanel panel;
     
+    private UnitFactory factory = new UnitFactory();
+    
     public UnitManager(AnimationPanel panelParam){
         panel = panelParam;
         openingScene();
@@ -52,11 +54,11 @@ public class UnitManager implements ShootingListener{
     }
 
     private void addDucks() {
-//        System.out.println("addDucks");
         if (time > 200) {
-            System.out.println("addDuck");
-            Duck d = new Duck(panel.getWidth() / 2, (int) (panel.getHeight() * 0.7));
-            units.add(d);
+            Unit duck = factory.create("Bird"); 
+            duck.xPos = panel.getWidth() / 2;
+            duck.yPos = (int) (panel.getHeight() * 0.7);
+            units.add(duck);
             Random rn = new Random();
             int n = 200 - 50 + 1;
             int i = rn.nextInt() % n;
@@ -76,9 +78,9 @@ public class UnitManager implements ShootingListener{
     }
     
     public void openingScene(){
-        Dog dog = new Dog(0,400);
+        Unit dog = factory.create("Chase");
+        dog.xPos = 0;
+        dog.yPos = 400;
         units.add(dog);
-
-        
     }
 }

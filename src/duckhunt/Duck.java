@@ -7,12 +7,14 @@ public class Duck extends Unit {
 
     public Duck(int initialX, int initialY) {
         super(initialX, initialY);
-                
-        image = new ImageIcon(getClass().getResource("Images/duck_hunt_bird_big2.gif")).getImage();
     }
     
+    public Duck(){
+        super();
+    }
+
     @Override
-     protected void move() {
+    protected void move() {
         Random rn = new Random();
         int n = 10;
         int i = rn.nextInt(n) + 1;
@@ -36,5 +38,10 @@ public class Duck extends Unit {
         if (yPos >= maxY) {
             ySpeed = UP_SPEED;
         }
+    }
+
+    @Override
+    protected void loadImage() {
+        image = new ImageIcon(getClass().getResource("Images/duck_hunt_bird_big2.gif")).getImage();
     }
 }

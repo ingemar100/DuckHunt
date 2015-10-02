@@ -3,7 +3,6 @@ package duckhunt;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,7 +10,7 @@ abstract public class Unit extends Component {
 
     protected int xPos;
     protected int yPos = 500;
-    private static final int RADIUS = 80;
+    private static final int RADIUS = 300;
     protected static final int LEFT_SPEED = -10;
     protected static final int RIGHT_SPEED = 10;
     protected static final int UP_SPEED = -4;
@@ -32,6 +31,12 @@ abstract public class Unit extends Component {
         maxY = initialY;
 
         move();
+        loadImage();
+    }
+    
+    public Unit(){
+        move();
+        loadImage();
     }
 
     public int getXPos() {
@@ -79,5 +84,7 @@ abstract public class Unit extends Component {
     }
     
     abstract protected void move();
+    
+    abstract protected void loadImage();
 
 }
