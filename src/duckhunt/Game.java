@@ -14,13 +14,17 @@ import javax.swing.*;
 public class Game {
 
     private static final Dimension SIZE = new Dimension(600, 600);
-    private static AnimationPanel panel = new AnimationPanel();
+    private static AnimationPanel panel;
     private static final int TIMER_DELAY = 20;
     private static final String GAME_NAME = "DuckDuckHunt";
-    private static final int FPS = 60;
+    private static final double FPS = 60;
     private static DuckManager dm;
 
     private static void createAndShowUI() {
+        panel = new AnimationPanel();
+        dm = new DuckManager(panel);
+        panel.setManager(dm);
+        
         JFrame frame = new JFrame(GAME_NAME);
         frame.getContentPane().add(panel);
         frame.getContentPane().setPreferredSize(SIZE);
@@ -30,37 +34,54 @@ public class Game {
         frame.setVisible(true);
         Sound.BACKGROUND.loop();
 
-        dm = new DuckManager(panel);
 
     }
 
     public static void main(String[] args) {
-        int dt = 1 / FPS;
         Thread threadForInitGame = new Thread() {
             public void run() {
                 createAndShowUI();
-                while (true) {
-//                    processInput();
-                    update();
+                double t = 0.0;
+
+                final double dt = 1 / FPS;
+
+                double currentTime = timeInSeconds();
+                double accumulator = 0.0;
+
+                boolean running = true;
+
+                while (running) {
+
+                    double newTime = timeInSeconds();
+                    double frameTime = newTime - currentTime;
+                    currentTime = newTime;
+
+                    accumulator += frameTime;
+
+                    while (accumulator >= dt) {
+                        update();
+                        accumulator -= dt;
+                        t += dt;
+                    }
                     render();
 
-                    try {
-                        Thread.sleep(TIMER_DELAY);
-                    } catch (Exception e) {
-
-                    }
                 }
             }
         };
         threadForInitGame.start();
     }
 
+    private static double timeInSeconds() {
+        return (double) System.nanoTime() / 1000000000.0;
+    }
+
     public static void update() {
+        System.out.println("update");
         dm.update();
     }
 
     public static void render() {
-        panel.repaint();
+        System.out.println("render");
         dm.render();
     }
 }

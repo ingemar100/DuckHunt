@@ -52,14 +52,18 @@ public class DuckManager implements ShootingListener{
         shooting = false;
     }
 
-    public void render() {
-        for (Duck d : ducks) {
-            d.draw(panel.getGraphics());
-        }
+    public ArrayList<Duck> getDucks(){
+        return ducks;
+    }
+    
+    public void render() {  
+        panel.repaint();
     }
 
     private void addDucks() {
+//        System.out.println("addDucks");
         if (time > 200) {
+            System.out.println("addDuck");
             Duck d = new Duck(panel.getWidth() / 2, (int) (panel.getHeight() * 0.7));
             ducks.add(d);
             Random rn = new Random();

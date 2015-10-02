@@ -13,15 +13,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
 @SuppressWarnings("serial")
-class AnimationPanel extends JPanel {
+public class AnimationPanel extends JPanel {
+
     private Point shotLocation;
     private JLabel scoreLabel = new JLabel("0");
     private int score = 0;
     private List<ShootingListener> shootingListeners = new ArrayList();
-    
-    private ParticleEngine pe;
+    private DuckManager dm;
+
     private Image backgroundImage;
 
     public AnimationPanel() {
@@ -30,18 +30,20 @@ class AnimationPanel extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 shotLocation = me.getPoint();
-                for(ShootingListener sl : shootingListeners){
+                for (ShootingListener sl : shootingListeners) {
                     sl.shoot(shotLocation);
                 }
             }
         });
         this.add(new JLabel("Score: "));
         this.add(scoreLabel);
-
-        pe = new ParticleEngine(1000, this.getBounds().width / 2, this.getBounds().height / 2);
     }
-    
-    public void addScore(int amount){
+
+    public void setManager(DuckManager dm) {
+        this.dm = dm;
+    }
+
+    public void addScore(int amount) {
         score += amount;
         scoreLabel.setText(score + "");
     }
@@ -49,13 +51,22 @@ class AnimationPanel extends JPanel {
     @Override
     // override a Swing JComponent's paintComponent, not the paint method
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g); 
+        super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
 
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
-        
-        pe.refresh(g);
+
+        List<Duck> ducks = dm.getDucks();
+        for (Duck d : ducks) {
+            d.draw(g);
+        }
+    }
+
+    private Duck d;
+
+    public void setDuck(Duck d) {
+        this.d = d;
     }
 }
