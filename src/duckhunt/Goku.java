@@ -27,7 +27,7 @@ public class Goku {
     }
 
     protected void draw(Graphics g) {
-        goku = new ImageIcon(getClass().getResource("goku.gif")).getImage();
+        goku = new ImageIcon(getClass().getResource("Images/goku.gif")).getImage();
 
         g.drawImage(goku, xPos, yPos, 200, 200, null);
 

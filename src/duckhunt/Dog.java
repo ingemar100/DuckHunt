@@ -26,7 +26,7 @@ public class Dog {
     }
 
     protected void draw(Graphics g) {
-        running = new ImageIcon(getClass().getResource("dog_with_duck_running.gif")).getImage();
+        running = new ImageIcon(getClass().getResource("Images/dog_with_duck_running.gif")).getImage();
 
         g.drawImage(running, xPos, yPos, 200, 200, null);
 

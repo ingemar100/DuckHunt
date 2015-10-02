@@ -8,7 +8,6 @@ package duckhunt;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
-import javax.swing.JPanel;
 
 /**
  *

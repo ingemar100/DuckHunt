@@ -5,17 +5,13 @@
  */
 package duckhunt;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 
 /**
  *
@@ -125,7 +121,7 @@ public class Duck extends Component{
 //        }
 //        g.fillOval(xPos - RADIUS, yPos - RADIUS, 2 * RADIUS, 2 * RADIUS);
 //        duck = new ImageIcon(getClass().getResource("FlyingEagle.gif-c200")).getImage();
-        duck = new ImageIcon(getClass().getResource("duck_hunt_bird_big2.gif")).getImage();
+        duck = new ImageIcon(getClass().getResource("Images/duck_hunt_bird_big2.gif")).getImage();
 //        duck = new ImageIcon(getClass().getResource("psyduck.gif")).getImage();
         
         if (xSpeed == RIGHT_SPEED) {

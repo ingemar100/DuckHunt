@@ -25,7 +25,7 @@ public class AnimationPanel extends JPanel {
     private Image backgroundImage;
 
     public AnimationPanel() {
-        backgroundImage = new ImageIcon(getClass().getResource("background.png")).getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("Images/background.png")).getImage();
 
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
