@@ -17,6 +17,7 @@ public class UnitManager implements ShootingListener{
     
     public UnitManager(AnimationPanel panelParam){
         panel = panelParam;
+        panel.addShootingListener(this);
         openingScene();
     }
 
@@ -30,6 +31,7 @@ public class UnitManager implements ShootingListener{
                 Sound.OFFSCREEN.play();
             } else {
                 if (shooting) {
+                    System.out.println("shooting");
                     if (shotLocation.x > (unit.getXPos() - unit.getRadius()) && shotLocation.x < unit.getXPos() + unit.getRadius()
                             && shotLocation.y > (unit.getYPos() - unit.getRadius()) && shotLocation.y < unit.getYPos() + unit.getRadius()) {
                         System.out.println("geraakt");
@@ -77,7 +79,7 @@ public class UnitManager implements ShootingListener{
         shotLocation = p;
     }
     
-    public void openingScene(){
+    private void openingScene(){
         Unit dog = factory.create("Chase");
         dog.xPos = 0;
         dog.yPos = 400;

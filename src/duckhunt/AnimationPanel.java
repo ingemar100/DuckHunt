@@ -38,6 +38,10 @@ public class AnimationPanel extends JPanel {
         this.add(new JLabel("Score: "));
         this.add(scoreLabel);
     }
+    
+    public void addShootingListener(ShootingListener sl){
+        shootingListeners.add(sl);
+    }
 
     public void setManager(UnitManager dm) {
         this.dm = dm;
