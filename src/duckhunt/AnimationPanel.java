@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -63,7 +64,9 @@ public class AnimationPanel extends JPanel {
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 
         List<Unit> units = dm.getUnits();
-        for (Unit u : units) {
+        Iterator<Unit> it = units.iterator();
+        while(it.hasNext()){
+            Unit u = it.next();
             u.draw(g);
         }
     }
