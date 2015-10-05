@@ -10,7 +10,7 @@ abstract public class Unit extends Component {
 
     protected int xPos;
     protected int yPos = 500;
-    private static final int RADIUS = 300;
+    private static final int RADIUS = 80;
     protected static final int LEFT_SPEED = -10;
     protected static final int RIGHT_SPEED = 10;
     protected static final int UP_SPEED = -4;

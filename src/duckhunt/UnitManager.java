@@ -7,11 +7,13 @@ import java.util.Random;
 public class UnitManager implements ShootingListener{
     
     private static ArrayList<Unit> units = new ArrayList();
-    private static int time = 0;
     private static final int KILL_POINTS = 100;
     private static boolean shooting;
     private static Point shotLocation;
     private AnimationPanel panel;
+    private static double time = 0;
+    private static final int MAX_SPAWN_TIME = 5; //seconds
+    private static int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000;
     
     private UnitFactory factory = new UnitFactory();
     
@@ -21,7 +23,9 @@ public class UnitManager implements ShootingListener{
         openingScene();
     }
 
-    public void update() {
+    public void update(double dt) {
+//        System.out.println("Dt: " + dt);
+        time += dt;
         addDucks();
         ArrayList<Unit> deadUnits = new ArrayList();
         for (Unit unit : units) {
@@ -31,10 +35,8 @@ public class UnitManager implements ShootingListener{
                 Sound.OFFSCREEN.play();
             } else {
                 if (shooting) {
-                    System.out.println("shooting");
                     if (shotLocation.x > (unit.getXPos() - unit.getRadius()) && shotLocation.x < unit.getXPos() + unit.getRadius()
                             && shotLocation.y > (unit.getYPos() - unit.getRadius()) && shotLocation.y < unit.getYPos() + unit.getRadius()) {
-                        System.out.println("geraakt");
                         unit.hit();
                         deadUnits.add(unit);
                         panel.addScore(KILL_POINTS);
@@ -56,17 +58,20 @@ public class UnitManager implements ShootingListener{
     }
 
     private void addDucks() {
-        if (time > 200) {
+//        System.out.println("Time: " + time);
+        if (time > nextUnitTime) {
             Unit duck = factory.create("Bird"); 
             duck.xPos = panel.getWidth() / 2;
             duck.yPos = (int) (panel.getHeight() * 0.7);
             units.add(duck);
+            
+            //random spawntijd tussen 1-5 sec
             Random rn = new Random();
-            int n = 200 - 50 + 1;
-            int i = rn.nextInt() % n;
-            time = 50 + i;
+            int secs = rn.nextInt(MAX_SPAWN_TIME) + 1;
+            nextUnitTime = secs * 1000 * 1000;
+//            System.out.println("create duck");
+            time = 0;
         }
-        time++;
     }
 
     private boolean isOffscreen(int x, int y) {

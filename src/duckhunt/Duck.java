@@ -18,7 +18,6 @@ public class Duck extends Unit {
         Random rn = new Random();
         int n = 10;
         int i = rn.nextInt(n) + 1;
-        System.out.println(i);
         if (i < 5) {
             //verander x richting
             if (xSpeed == RIGHT_SPEED) {
