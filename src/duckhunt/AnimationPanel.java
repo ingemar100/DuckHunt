@@ -1,5 +1,6 @@
 package duckhunt;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -13,6 +14,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Cursor;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class AnimationPanel extends JPanel {
@@ -26,9 +29,17 @@ public class AnimationPanel extends JPanel {
 
     public AnimationPanel() {
         backgroundImage = new ImageIcon(getClass().getResource("Images/background.png")).getImage();
-
+       
+        this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
+        
+//       this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+//            new ImageIcon("pokeball.jpg").getImage(),
+//            new Point(0,0),"custom cursor"));
+        
+        
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
+                
                 shotLocation = me.getPoint();
                 for (ShootingListener sl : shootingListeners) {
                     sl.shoot(shotLocation);

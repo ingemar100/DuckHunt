@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 
 abstract public class Unit extends Component {
 
@@ -85,6 +86,12 @@ abstract public class Unit extends Component {
     
     abstract protected void move();
     
-    abstract protected void loadImage();
+    protected void loadImage(){
+        String loc = getImageLocation();
+        System.out.println(loc);
+        image = new ImageIcon(getClass().getResource(loc)).getImage();
+    }
+    
+    abstract protected String getImageLocation();
 
 }

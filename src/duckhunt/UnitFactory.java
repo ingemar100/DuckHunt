@@ -30,5 +30,6 @@ public class UnitFactory {
         idMap.put("Bird", "duckhunt.Duck");
         idMap.put("Chase", "duckhunt.Dog");
         idMap.put("Chaser", "duckhunt.Goku");
+        idMap.put("Special", "duckhunt.Psyduck");
     }
 }

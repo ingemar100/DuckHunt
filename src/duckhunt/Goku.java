@@ -15,7 +15,7 @@ public class Goku extends Unit {
     }
 
     @Override
-    protected void loadImage() {
-        image = new ImageIcon(getClass().getResource("Images/goku.gif")).getImage();
+    protected String getImageLocation() {
+        return "Images/goku.gif";
     }
 }

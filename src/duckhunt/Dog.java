@@ -3,7 +3,7 @@ package duckhunt;
 import javax.swing.ImageIcon;
 
 public class Dog extends Unit {
-
+    
     public Dog(int initialX, int initialY) {
         super(initialX, initialY);
     }
@@ -19,8 +19,8 @@ public class Dog extends Unit {
     }
 
     @Override
-    protected void loadImage() {
-        image = new ImageIcon(getClass().getResource("Images/dog_with_duck_running.gif")).getImage();
+    protected String getImageLocation() {
+        return "Images/dog_with_duck_running.gif";
     }
 
 }

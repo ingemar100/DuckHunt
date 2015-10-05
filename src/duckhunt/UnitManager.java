@@ -4,21 +4,23 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class UnitManager implements ShootingListener{
-    
-    private static ArrayList<Unit> units = new ArrayList();
-    private static final int KILL_POINTS = 100;
-    private static boolean shooting;
-    private static Point shotLocation;
+public class UnitManager implements ShootingListener {
+
+    private ArrayList<Unit> units = new ArrayList();
+    private final int KILL_POINTS = 100;
+    private boolean shooting;
+    private Point shotLocation;
     private AnimationPanel panel;
     private Game game;
-    private static double time = 0;
-    private static final int MAX_SPAWN_TIME = 5; //seconds
-    private static int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000;
-    
+    private double time = 0;
+    private final int MAX_SPAWN_TIME = 5; //seconds
+    private int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000;
+    private final int TIME_FOR_SPECIAL = 1000;
+    private int scoreUntilSpecial = TIME_FOR_SPECIAL;
+
     private UnitFactory factory = new UnitFactory();
-    
-    public UnitManager(AnimationPanel panelParam, Game game){
+
+    public UnitManager(AnimationPanel panelParam, Game game) {
         this.game = game;
         panel = panelParam;
         panel.addShootingListener(this);
@@ -41,7 +43,8 @@ public class UnitManager implements ShootingListener{
                             && shotLocation.y > (unit.getYPos() - unit.getRadius()) && shotLocation.y < unit.getYPos() + unit.getRadius()) {
                         unit.hit();
                         deadUnits.add(unit);
-                        game.addScore(KILL_POINTS);
+
+                        addScore(KILL_POINTS);
                     }
                 }
                 unit.update();
@@ -51,22 +54,35 @@ public class UnitManager implements ShootingListener{
         shooting = false;
     }
 
-    public ArrayList<Unit> getUnits(){
+    public ArrayList<Unit> getUnits() {
         return units;
     }
-    
-    public void render() {  
+
+    public void render() {
         panel.repaint();
     }
 
+    private void addScore(int score) {
+        game.addScore(score);
+        scoreUntilSpecial -= score;
+    }
+
     private void addDucks() {
-//        System.out.println("Time: " + time);
+        if (scoreUntilSpecial <= 0) {
+            scoreUntilSpecial = TIME_FOR_SPECIAL;
+            Unit spec = factory.create("Special");
+            spec.xPos = panel.getWidth() / 2;
+            spec.yPos = (int) (panel.getHeight() * 0.7);
+            units.add(spec);
+            System.out.println(spec);
+        }
+
         if (time > nextUnitTime) {
-            Unit duck = factory.create("Bird"); 
+            Unit duck = factory.create("Bird");
             duck.xPos = panel.getWidth() / 2;
             duck.yPos = (int) (panel.getHeight() * 0.7);
             units.add(duck);
-            
+
             //random spawntijd tussen 1-5 sec
             Random rn = new Random();
             int secs = rn.nextInt(MAX_SPAWN_TIME) + 1;
@@ -74,6 +90,7 @@ public class UnitManager implements ShootingListener{
 //            System.out.println("create duck");
             time = 0;
         }
+
     }
 
     private boolean isOffscreen(int x, int y) {
@@ -85,8 +102,8 @@ public class UnitManager implements ShootingListener{
         shooting = true;
         shotLocation = p;
     }
-    
-    private void openingScene(){
+
+    private void openingScene() {
         Unit dog = factory.create("Chase");
         dog.xPos = 0;
         dog.yPos = 400;

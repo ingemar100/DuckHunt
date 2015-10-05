@@ -4,7 +4,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 public class Duck extends Unit {
-
+    
     public Duck(int initialX, int initialY) {
         super(initialX, initialY);
     }
@@ -40,7 +40,7 @@ public class Duck extends Unit {
     }
 
     @Override
-    protected void loadImage() {
-        image = new ImageIcon(getClass().getResource("Images/duck_hunt_bird_big2.gif")).getImage();
+    protected String getImageLocation() {
+        return "Images/duck_hunt_bird_big2.gif";
     }
 }
