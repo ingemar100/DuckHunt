@@ -19,7 +19,6 @@ public class AnimationPanel extends JPanel {
 
     private Point shotLocation;
     private JLabel scoreLabel = new JLabel("0");
-    private int score = 0;
     private List<ShootingListener> shootingListeners = new ArrayList();
     private UnitManager dm;
 
@@ -47,10 +46,9 @@ public class AnimationPanel extends JPanel {
     public void setManager(UnitManager dm) {
         this.dm = dm;
     }
-
-    public void addScore(int amount) {
-        score += amount;
-        scoreLabel.setText(score + "");
+    
+    public void setScore(int score){
+        scoreLabel.setText("" + score);
     }
 
     @Override

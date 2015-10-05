@@ -11,13 +11,15 @@ public class UnitManager implements ShootingListener{
     private static boolean shooting;
     private static Point shotLocation;
     private AnimationPanel panel;
+    private Game game;
     private static double time = 0;
     private static final int MAX_SPAWN_TIME = 5; //seconds
     private static int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000;
     
     private UnitFactory factory = new UnitFactory();
     
-    public UnitManager(AnimationPanel panelParam){
+    public UnitManager(AnimationPanel panelParam, Game game){
+        this.game = game;
         panel = panelParam;
         panel.addShootingListener(this);
         openingScene();
@@ -39,7 +41,7 @@ public class UnitManager implements ShootingListener{
                             && shotLocation.y > (unit.getYPos() - unit.getRadius()) && shotLocation.y < unit.getYPos() + unit.getRadius()) {
                         unit.hit();
                         deadUnits.add(unit);
-                        panel.addScore(KILL_POINTS);
+                        game.addScore(KILL_POINTS);
                     }
                 }
                 unit.update();

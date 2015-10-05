@@ -79,7 +79,7 @@ abstract public class Unit extends Component {
         if (xSpeed == RIGHT_SPEED) {
             g.drawImage(image, xPos - RADIUS, yPos - RADIUS, 2 * RADIUS, 2 * RADIUS, null);
         } else if (xSpeed == LEFT_SPEED) {
-            g.drawImage(image, xPos - RADIUS, yPos - RADIUS, -2 * RADIUS, 2 * RADIUS, null);
+            g.drawImage(image, xPos, yPos - RADIUS, -2 * RADIUS, 2 * RADIUS, null);
         }
     }
     

@@ -5,30 +5,28 @@ import javax.swing.*;
 
 public class Game {
 
-    private static final Dimension SIZE = new Dimension(800, 800);
-    private static AnimationPanel panel;
-    private static final String GAME_NAME = "DuckDuckHunt";
-    private static final double FPS = 60;
-    private static UnitManager um;
+    private AnimationPanel panel;
+    private final String GAME_NAME = "DuckDuckHunt";
+    private final double FPS = 60;
+    private int score = 0;
+    private UnitManager um;
 
-    private static void createAndShowUI() {
+    private void createAndShowUI() {
         panel = new AnimationPanel();
-        um = new UnitManager(panel);
+        um = new UnitManager(panel, this);
         panel.setManager(um);
         
         JFrame frame = new JFrame(GAME_NAME);
         frame.getContentPane().add(panel);
-        frame.getContentPane().setPreferredSize(SIZE);
+        frame.setExtendedState(frame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         Sound.BACKGROUND.loop();
-
-
     }
-
-    public static void main(String[] args) {
+    
+    public void gameLoop(){
         Thread threadForInitGame = new Thread() {
             public void run() {
                 createAndShowUI();
@@ -76,17 +74,22 @@ public class Game {
         threadForInitGame.start();
     }
 
-    private static double timeInMicroseconds() {
+    private double timeInMicroseconds() {
         return System.nanoTime() / 1000.0;
     }
 
-    public static void update(double dt) {
+    public void update(double dt) {
 //        System.out.println("update");
         um.update(dt);
     }
 
-    public static void render() {
+    public void render() {
 //        System.out.println("render");
         um.render();
+    }
+
+    public void addScore(int amount) {
+        score += amount;
+        panel.setScore(score);
     }
 }
