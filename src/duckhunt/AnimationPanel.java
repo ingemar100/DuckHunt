@@ -3,7 +3,6 @@ package duckhunt;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
@@ -15,7 +14,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Panel;
 import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
 public class AnimationPanel extends JPanel {
@@ -29,17 +36,14 @@ public class AnimationPanel extends JPanel {
 
     public AnimationPanel() {
         backgroundImage = new ImageIcon(getClass().getResource("Images/background.png")).getImage();
-       
-        this.setCursor(new Cursor(Cursor.CROSSHAIR_CURSOR));
-        
-//       this.setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-//            new ImageIcon("pokeball.jpg").getImage(),
-//            new Point(0,0),"custom cursor"));
-        
+                
+        Image im = Toolkit.getDefaultToolkit().createImage("src/duckhunt/Images/crosshair.png");
+        Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16,16),"custom cursor");
+        setCursor(c);
         
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
-                
+
                 shotLocation = me.getPoint();
                 for (ShootingListener sl : shootingListeners) {
                     sl.shoot(shotLocation);
@@ -49,16 +53,16 @@ public class AnimationPanel extends JPanel {
         this.add(new JLabel("Score: "));
         this.add(scoreLabel);
     }
-    
-    public void addShootingListener(ShootingListener sl){
+
+    public void addShootingListener(ShootingListener sl) {
         shootingListeners.add(sl);
     }
 
     public void setManager(UnitManager dm) {
         this.dm = dm;
     }
-    
-    public void setScore(int score){
+
+    public void setScore(int score) {
         scoreLabel.setText("" + score);
     }
 
@@ -74,7 +78,7 @@ public class AnimationPanel extends JPanel {
 
         List<Unit> units = dm.getUnits();
         Iterator<Unit> it = units.iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             Unit u = it.next();
             u.draw(g);
         }
