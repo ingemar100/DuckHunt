@@ -14,8 +14,8 @@ public class Game {
     private final String GAME_NAME = "DuckDuckHunt";
     private final double FPS = 60;
     private int score = 0;
-    private UnitManager um;
-    private InputContainer ic = new InputContainer();
+    private UnitManager unitManager;
+    private InputContainer inputCont = new InputContainer();
 
     public void gameLoop() {
         Thread threadForInitGame = new Thread() {
@@ -52,7 +52,7 @@ public class Game {
 
                     while (accumulator >= dt) {
                         ArrayList shots = readInput();
-                        um.collide(shots);
+                        unitManager.collide(shots);
                         update(dt);
                         accumulator -= dt;
                         t += dt;
@@ -74,7 +74,7 @@ public class Game {
 
     private ArrayList<Input> readInput() {
         ArrayList<Input> shots = new ArrayList<>();
-        LinkedList<Input> inputs = ic.getInputs();
+        LinkedList<Input> inputs = inputCont.getInputs();
         
         Iterator<Input> it = inputs.iterator();
         while(it.hasNext()){
@@ -87,12 +87,12 @@ public class Game {
 
     public void update(double dt) {
 //        System.out.println("update");
-        um.update(dt);
+        unitManager.update(dt);
     }
 
     public void render() {
 //        System.out.println("render");
-        um.render();
+        unitManager.render();
     }
 
     public void addScore(int amount) {
@@ -101,9 +101,7 @@ public class Game {
     }
     
     private void createAndShowUI() {
-        panel = new AnimationPanel(ic);
-        um = new UnitManager(panel, this);
-        panel.setManager(um);
+        panel = new AnimationPanel(inputCont);
 
         JFrame frame = new JFrame(GAME_NAME);
         frame.getContentPane().add(panel);
@@ -112,6 +110,11 @@ public class Game {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        
+        
         Sound.BACKGROUND.loop();
+        
+        unitManager = new UnitManager(panel, this);
+        panel.setManager(unitManager);
     }
 }

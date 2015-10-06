@@ -23,24 +23,24 @@ import java.awt.Toolkit;
 public class AnimationPanel extends JPanel {
 
     private JLabel scoreLabel = new JLabel("0");
-    private UnitManager dm;
+    private UnitManager unitManager;
 
     private Image backgroundImage;
 
     public AnimationPanel(InputContainer inputCont) {
         backgroundImage = new ImageIcon(getClass().getResource("../Images/background.png")).getImage();
-                
+
         Image im = Toolkit.getDefaultToolkit().createImage("src/duckhunt/Images/crosshair.png");
-        Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16,16),"custom cursor");
+        Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16, 16), "custom cursor");
         setCursor(c);
-        
+
         this.addMouseListener(inputCont);
         this.add(new JLabel("Score: "));
         this.add(scoreLabel);
     }
 
     public void setManager(UnitManager dm) {
-        this.dm = dm;
+        this.unitManager = dm;
     }
 
     public void setScore(int score) {
@@ -57,11 +57,13 @@ public class AnimationPanel extends JPanel {
 
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 
-        List<Unit> units = (List<Unit>) dm.getUnits().clone();
-        Iterator<Unit> it = units.iterator();
-        while (it.hasNext()) {
-            Unit u = it.next();
-            u.draw(g);
+        if (unitManager != null) {
+            List<Unit> units = (List<Unit>) unitManager.getUnits().clone();
+            Iterator<Unit> it = units.iterator();
+            while (it.hasNext()) {
+                Unit u = it.next();
+                u.draw(g);
+            }
         }
     }
 }

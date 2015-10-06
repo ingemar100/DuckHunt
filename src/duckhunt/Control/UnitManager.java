@@ -16,15 +16,17 @@ public class UnitManager {
     private final Game game;
     private double time = 0;
     private final int MAX_SPAWN_TIME = 5; //seconds
-    private int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000;
+    private int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000; //microseconds
     private final int TIME_FOR_SPECIAL = 1000;
     private int scoreUntilSpecial = TIME_FOR_SPECIAL;
 
     private final UnitFactory factory = new UnitFactory();
+    private final int SPAWN_HEIGHT;
 
     public UnitManager(AnimationPanel panelParam, Game game) {
         this.game = game;
         panel = panelParam;
+        SPAWN_HEIGHT = (int) (panel.getHeight() * 0.7);
         openingScene();
     }
 
@@ -107,7 +109,7 @@ public class UnitManager {
             int x = (r.nextInt(xMargin) + minX);
             
             unit.setXPos(x);
-            unit.setYPos((int) (panel.getHeight() * 0.7));
+            unit.setYPos(SPAWN_HEIGHT);
             units.add(unit);
         }
     }
@@ -119,7 +121,7 @@ public class UnitManager {
     private void openingScene() {
         Unit dog = factory.create("Chase");
         dog.setXPos(0);
-        dog.setYPos(400);
+        dog.setYPos(SPAWN_HEIGHT);
         units.add(dog);
     }
 }
