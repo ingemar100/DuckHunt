@@ -88,7 +88,6 @@ abstract public class Unit extends Component {
     
     protected void loadImage(){
         String loc = getImageLocation();
-        System.out.println(loc);
         image = new ImageIcon(getClass().getResource(loc)).getImage();
     }
     

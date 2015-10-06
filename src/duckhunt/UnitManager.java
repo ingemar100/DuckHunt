@@ -2,14 +2,14 @@ package duckhunt;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
-public class UnitManager implements ShootingListener {
+public class UnitManager {
 
     private ArrayList<Unit> units = new ArrayList();
     private final int KILL_POINTS = 100;
-    private boolean shooting;
-    private Point shotLocation;
     private AnimationPanel panel;
     private Game game;
     private double time = 0;
@@ -23,35 +23,45 @@ public class UnitManager implements ShootingListener {
     public UnitManager(AnimationPanel panelParam, Game game) {
         this.game = game;
         panel = panelParam;
-        panel.addShootingListener(this);
         openingScene();
     }
 
     public void update(double dt) {
-//        System.out.println("Dt: " + dt);
         time += dt;
         addDucks();
-        ArrayList<Unit> deadUnits = new ArrayList();
-        for (Unit unit : units) {
-            //controleer of eend buiten scherm is
+        Iterator<Unit> it = units.iterator();
+        
+        while(it.hasNext()) {
+            Unit unit = it.next();
             if (isOffscreen(unit.getXPos(), unit.getYPos())) {
-                deadUnits.add(unit);
+                it.remove();
                 Sound.OFFSCREEN.play();
             } else {
-                if (shooting) {
-                    if (shotLocation.x > (unit.getXPos() - unit.getRadius()) && shotLocation.x < unit.getXPos() + unit.getRadius()
-                            && shotLocation.y > (unit.getYPos() - unit.getRadius()) && shotLocation.y < unit.getYPos() + unit.getRadius()) {
-                        unit.hit();
-                        deadUnits.add(unit);
-
-                        addScore(KILL_POINTS);
-                    }
-                }
                 unit.update();
             }
         }
-        units.removeAll(deadUnits);
-        shooting = false;
+    }
+
+    public void collide(List<ShootInput> shots) {
+        Iterator<ShootInput> it = shots.iterator();
+
+        while (it.hasNext()) {
+            ShootInput shot = it.next();
+            Iterator<Unit> unitIter = units.iterator();
+
+            while (unitIter.hasNext()) {
+                Unit unit = unitIter.next();
+                Point p = shot.getPoint();
+
+                if (p.x > (unit.getXPos() - unit.getRadius()) && p.x < unit.getXPos() + unit.getRadius()
+                        && p.y > (unit.getYPos() - unit.getRadius()) && p.y < unit.getYPos() + unit.getRadius()) {
+                    unit.hit();
+                    unitIter.remove();
+                    
+                    addScore(KILL_POINTS);
+                }
+            }
+        }
     }
 
     public ArrayList<Unit> getUnits() {
@@ -90,17 +100,10 @@ public class UnitManager implements ShootingListener {
 //            System.out.println("create duck");
             time = 0;
         }
-
     }
 
     private boolean isOffscreen(int x, int y) {
         return x < 0 || x > panel.getWidth() || y < 0 || y > panel.getHeight();
-    }
-
-    @Override
-    public void shoot(Point p) {
-        shooting = true;
-        shotLocation = p;
     }
 
     private void openingScene() {

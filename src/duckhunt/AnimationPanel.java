@@ -1,6 +1,6 @@
 package duckhunt;
 
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -15,47 +15,27 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
 public class AnimationPanel extends JPanel {
 
     private Point shotLocation;
     private JLabel scoreLabel = new JLabel("0");
-    private List<ShootingListener> shootingListeners = new ArrayList();
     private UnitManager dm;
 
     private Image backgroundImage;
 
-    public AnimationPanel() {
+    public AnimationPanel(InputContainer inputCont) {
         backgroundImage = new ImageIcon(getClass().getResource("Images/background.png")).getImage();
                 
         Image im = Toolkit.getDefaultToolkit().createImage("src/duckhunt/Images/crosshair.png");
         Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16,16),"custom cursor");
         setCursor(c);
         
-        this.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent me) {
-
-                shotLocation = me.getPoint();
-                for (ShootingListener sl : shootingListeners) {
-                    sl.shoot(shotLocation);
-                }
-            }
-        });
+        this.addMouseListener(inputCont);
         this.add(new JLabel("Score: "));
         this.add(scoreLabel);
-    }
-
-    public void addShootingListener(ShootingListener sl) {
-        shootingListeners.add(sl);
     }
 
     public void setManager(UnitManager dm) {
