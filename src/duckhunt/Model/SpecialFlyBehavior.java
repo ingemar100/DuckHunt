@@ -11,33 +11,38 @@ import java.util.Random;
  *
  * @author Ingemar
  */
-public class WalkingBehavior extends Behavior {
+public class SpecialFlyBehavior extends FlyBehavior{
 
-    public WalkingBehavior(Unit u) {
+    public SpecialFlyBehavior(Unit u) {
         super(u);
-        u.setYSpeed(0);
-    }
-
-    @Override
-    public void changeDirection() {
-        u.setXSpeed(getDefaultRightSpeed());
-        u.setYSpeed(0);
-    }
-
-    @Override
-    public void move() {
         
+    }
+    
+    @Override
+    public void move(){
+        lastChange += u.getXSpeed();
+        if (lastChange > 100) {
+            Random r = new Random();
+            int i = r.nextInt(100) + 1;
+            //chance of changing direction
+            if (i > 50) {
+                changeDirection();
+            }
+            lastChange = 0;
+        }
         u.setXPos(u.getXPos() + u.getXSpeed());
         u.setYPos(u.getYPos() + u.getYSpeed());
+
     }
 
     @Override
     public int getDefaultRightSpeed() {
-        return 10;
+        return 20;
     }
 
     @Override
     public int getDefaultDownSpeed() {
-        return 0;
+        return 8;
     }
+    
 }

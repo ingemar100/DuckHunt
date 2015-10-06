@@ -5,10 +5,6 @@ import javax.swing.ImageIcon;
 
 public class Duck extends Unit {
     
-    public Duck(int initialX, int initialY) {
-        super(initialX, initialY);
-    }
-    
     public Duck(){
         super();
     }
@@ -25,6 +21,6 @@ public class Duck extends Unit {
 
     @Override
     protected void setBehavior() {
-        behavior = new TestBehavior();
+        behavior = new FlyBehavior(this);
     }
 }

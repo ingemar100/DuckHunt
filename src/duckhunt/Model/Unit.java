@@ -13,32 +13,18 @@ abstract public class Unit extends Component {
     protected int xPos;
     protected int yPos = 500;
     private static final int RADIUS = 80;
-    public static final int DEF_LEFT_SPEED = -10;
-    public static final int DEF_RIGHT_SPEED = 10;
-    public static final int DEF_UP_SPEED = -4;
-    public static final int DEF_DOWN_SPEED = 4;
 
-    protected int xSpeed = DEF_RIGHT_SPEED;
-    protected int ySpeed = DEF_UP_SPEED;
+    protected int xSpeed = 0;
+    protected int ySpeed = 0;
     private int lastChange = 10;
 
     protected Image image;
     protected Behavior behavior;
 
-    public Unit(int initialX, int initialY) {
-
-        xPos = initialX;
-        yPos = initialY;
-        lastChange = initialX;
-
-        move();
-        loadImage();
-    }
     
     public Unit(){
         loadImage();
         setBehavior();
-        move();
     }
 
     public int getXPos() {
@@ -76,14 +62,9 @@ abstract public class Unit extends Component {
     public int getRadius() {
         return RADIUS;
     }
-
-    public void update() {
-        if ((xPos - lastChange) > 400) {
-            move();
-            lastChange = xPos;
-        }
-        xPos += xSpeed;
-        yPos += ySpeed;
+    
+    public void move(){
+        behavior.move();
     }
 
     public void hit() {
@@ -102,15 +83,11 @@ abstract public class Unit extends Component {
     }
 
     public void draw(Graphics g) {
-        if (xSpeed == DEF_RIGHT_SPEED) {
+        if (xSpeed == behavior.getDefaultRightSpeed()) {
             g.drawImage(image, xPos - RADIUS, yPos - RADIUS, 2 * RADIUS, 2 * RADIUS, null);
-        } else if (xSpeed == DEF_LEFT_SPEED) {
+        } else if (xSpeed == behavior.getDefaultLeftSpeed()) {
             g.drawImage(image, xPos, yPos - RADIUS, -2 * RADIUS, 2 * RADIUS, null);
         }
-    }
-    
-    private void move(){
-        behavior.move(this);
     }
     
     protected void loadImage(){

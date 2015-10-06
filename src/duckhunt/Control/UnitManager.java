@@ -42,7 +42,7 @@ public class UnitManager {
                 it.remove();
                 Sound.OFFSCREEN.play();
             } else {
-                unit.update();
+                unit.move();
             }
         }
         addDucks();

@@ -19,7 +19,7 @@ public class Game {
     private UnitManager unitManager;
     private InputContainer inputCont = new InputContainer();
 
-    private GameState state = GameState.MENU;
+    private GameState state = GameState.GAME;
 
     private enum GameState {
         MENU, GAME

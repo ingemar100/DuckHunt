@@ -3,10 +3,6 @@ package duckhunt.Model;
 import javax.swing.ImageIcon;
 
 public class Dog extends Unit {
-    
-    public Dog(int initialX, int initialY) {
-        super(initialX, initialY);
-    }
 
     public Dog() {
         super();
@@ -24,7 +20,7 @@ public class Dog extends Unit {
 
     @Override
     protected void setBehavior() {
-        behavior = new WalkingBehavior();
+        behavior = new WalkingBehavior(this);
     }
 
 }

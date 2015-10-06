@@ -4,10 +4,6 @@ import javax.swing.ImageIcon;
 
 public class Goku extends Unit {
 
-    public Goku(int initialX, int initialY) {
-        super(initialX, initialY);
-    }
-
     @Override
     protected String getImageLocation() {
         return "../Images/goku.gif";
@@ -20,6 +16,6 @@ public class Goku extends Unit {
 
     @Override
     protected void setBehavior() {
-        behavior = new TestBehavior();
+        behavior = new FlyBehavior(this);
     }
 }

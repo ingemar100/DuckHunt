@@ -10,6 +10,26 @@ package duckhunt.Model;
  * @author Ingemar
  */
 public abstract class Behavior {
-    abstract void move(Unit u);
+    protected Unit u;
     
+    public Behavior(Unit u){
+        this.u = u;
+        u.setXSpeed(getDefaultRightSpeed());
+        u.setYSpeed(getDefaultUpSpeed());
+    }
+    public abstract void changeDirection();
+    
+    public abstract void move();
+    
+    public abstract int getDefaultRightSpeed();
+    
+    public int getDefaultLeftSpeed(){
+        return getDefaultRightSpeed() * -1;
+    }
+    
+    public abstract int getDefaultDownSpeed();
+    
+    public int getDefaultUpSpeed(){
+        return getDefaultDownSpeed() * -1;
+    }
 }

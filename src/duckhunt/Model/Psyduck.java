@@ -5,7 +5,6 @@
  */
 package duckhunt.Model;
 
-import static duckhunt.Model.Unit.DEF_RIGHT_SPEED;
 import java.util.Random;
 import javax.swing.ImageIcon;
 
@@ -14,9 +13,6 @@ import javax.swing.ImageIcon;
  * @author Ingemar
  */
 public class Psyduck extends Unit{
-    public Psyduck(int initialX, int initialY) {
-        super(initialX, initialY);
-    }
     
     public Psyduck(){
         super();
@@ -34,6 +30,6 @@ public class Psyduck extends Unit{
 
     @Override
     protected void setBehavior() {
-        behavior = new TestBehavior();
+        behavior = new FlyBehavior(this);
     }
 }
