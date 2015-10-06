@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UnitManager {
 
@@ -86,32 +88,55 @@ public class UnitManager {
      * Adds a unit if certain conditions are met 
      */
     private void addDucks() {
-        Unit unit = null;
         if (scoreUntilSpecial <= 0) {
             scoreUntilSpecial = TIME_FOR_SPECIAL;
-            unit = factory.create("Special");
-        } 
-        else if (time > nextUnitTime) {
-            unit = factory.create("Bird");
+
+            Thread soundThreadDelay = new Thread() {
+                public void run() {
+                    Sound.BACKGROUND.stop();
+                    Sound.BONUS.play();
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(duckhunt.Control.UnitManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    Unit unit = factory.create("Special");
+                    addUnit(unit);
+                    System.out.println(unit);
+                    
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(duckhunt.Control.UnitManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Sound.BACKGROUND.loop();
+                }
+            };
+            soundThreadDelay.start();
+        } else if (time > nextUnitTime) {
+            Unit unit = factory.create("Bird");
 
             //random spawntijd tussen 1-5 sec
             Random rn = new Random();
             int secs = rn.nextInt(MAX_SPAWN_TIME) + 1;
             nextUnitTime = secs * 1000 * 1000;
             time = 0;
-        }
 
-        if (unit != null) {
-            Random r = new Random();
-            
-            int minX = (int) (panel.getWidth() * 0.4);
-            int xMargin = (int) (panel.getWidth() * 0.2);
-            int x = (r.nextInt(xMargin) + minX);
-            
-            unit.setXPos(x);
-            unit.setYPos(SPAWN_HEIGHT);
-            units.add(unit);
+            addUnit(unit);
         }
+    }
+
+    private void addUnit(Unit unit) {
+        Random r = new Random();
+
+        int minX = (int) (panel.getWidth() * 0.4);
+        int xMargin = (int) (panel.getWidth() * 0.2);
+        int x = (r.nextInt(xMargin) + minX);
+
+        unit.setXPos(x);
+        unit.setYPos(SPAWN_HEIGHT);
+        units.add(unit);
     }
 
     private boolean isOffscreen(int x, int y) {

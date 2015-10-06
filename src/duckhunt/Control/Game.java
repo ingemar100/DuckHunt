@@ -3,6 +3,7 @@ package duckhunt.Control;
 import duckhunt.Boundary.AnimationPanel;
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.InputContainer;
+import duckhunt.GameMenu;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,11 +12,18 @@ import javax.swing.*;
 public class Game {
 
     private AnimationPanel panel;
+    private GameMenu menuPanel;
     private final String GAME_NAME = "DuckDuckHunt";
     private final double FPS = 60;
     private int score = 0;
     private UnitManager unitManager;
     private InputContainer inputCont = new InputContainer();
+
+    private GameState state = GameState.GAME;
+
+    private enum GameState {
+        MENU, GAME
+    };
 
     public void gameLoop() {
         Thread threadForInitGame = new Thread() {
@@ -86,13 +94,17 @@ public class Game {
     }
 
     public void update(double dt) {
-//        System.out.println("update");
-        unitManager.update(dt);
+        if (state == GameState.GAME) {
+            unitManager.update(dt);
+        }
     }
 
     public void render() {
-//        System.out.println("render");
-        unitManager.render();
+        if (state == GameState.MENU) {
+            menuPanel.render();
+        } else if (state == GameState.GAME) {
+            unitManager.render();
+        }
     }
 
     public void addScore(int amount) {
@@ -114,6 +126,7 @@ public class Game {
         
         Sound.BACKGROUND.loop();
         
+        menuPanel = new GameMenu();
         unitManager = new UnitManager(panel, this);
         panel.setManager(unitManager);
     }

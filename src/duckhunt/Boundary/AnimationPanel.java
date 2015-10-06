@@ -26,10 +26,14 @@ public class AnimationPanel extends JPanel {
     private UnitManager unitManager;
 
     private Image backgroundImage;
+    
+    Image startButton;
 
     public AnimationPanel(InputContainer inputCont) {
         backgroundImage = new ImageIcon(getClass().getResource("../Images/background.png")).getImage();
-
+        
+        startButton = new ImageIcon(getClass().getResource("../Images/startButton.png")).getImage();
+                
         Image im = Toolkit.getDefaultToolkit().createImage("src/duckhunt/Images/crosshair.png");
         Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16, 16), "custom cursor");
         setCursor(c);

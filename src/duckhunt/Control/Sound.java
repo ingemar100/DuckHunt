@@ -13,5 +13,6 @@ public class Sound {
     public static final AudioClip OFFSCREEN = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/Birds_Flying_Away.wav"));
     public static final AudioClip SHOT = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/bomb-03.wav"));
     public static final AudioClip COCK = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/cockgun-02.wav"));
+    public static final AudioClip BONUS = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/BonusSound.wav"));
 
 }
