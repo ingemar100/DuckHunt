@@ -11,7 +11,7 @@ import java.util.Random;
  *
  * @author Ingemar
  */
-public class WalkingBehavior extends Behavior {
+public class WalkingBehavior extends MoveBehavior {
 
     public WalkingBehavior(Unit u) {
         super(u);

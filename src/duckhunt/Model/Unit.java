@@ -8,15 +8,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
-abstract public class Unit extends Component {
+abstract public class Unit {
 
     protected int xPos;
     protected int yPos = 500;
     private static final int RADIUS = 80;
-    private int lastChange = 10;
 
     protected Image image;
-    protected Behavior behavior;
+    protected MoveBehavior behavior;
 
     
     public Unit(){
@@ -44,6 +43,10 @@ abstract public class Unit extends Component {
         return RADIUS;
     }
     
+    public void update(double dt){
+        behavior.update(dt);
+    }
+    
     public void move(){
         behavior.move();
     }
@@ -64,9 +67,9 @@ abstract public class Unit extends Component {
     }
 
     public void draw(Graphics g) {
-        if (behavior.xSpeed == behavior.getDefaultRightSpeed()) {
+        if (behavior.xSpeed >= 0) {
             g.drawImage(image, xPos - RADIUS, yPos - RADIUS, 2 * RADIUS, 2 * RADIUS, null);
-        } else if (behavior.xSpeed == behavior.getDefaultLeftSpeed()) {
+        } else if (behavior.xSpeed < 0) {
             g.drawImage(image, xPos, yPos - RADIUS, -2 * RADIUS, 2 * RADIUS, null);
         }
     }

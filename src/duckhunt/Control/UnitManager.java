@@ -31,8 +31,8 @@ public class UnitManager {
         SPAWN_HEIGHT = (int) (panel.getHeight() * 0.7);
         openingScene();
     }
-
-    public void update(double dt) {
+    
+    public void update(double dt){
         time += dt;
         Iterator<Unit> it = units.iterator();
 
@@ -41,11 +41,21 @@ public class UnitManager {
             if (isOffscreen(unit.getXPos(), unit.getYPos())) {
                 it.remove();
                 Sound.OFFSCREEN.play();
-            } else {
-                unit.move();
+            }
+            else {
+                unit.update(dt);
             }
         }
         addDucks();
+    }
+
+    public void move() {
+        Iterator<Unit> it = units.iterator();
+
+        while (it.hasNext()) {
+            Unit unit = it.next();
+            unit.move();
+        }
     }
 
     public void collide(List<ShootInput> shots) {

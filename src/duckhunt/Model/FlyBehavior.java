@@ -11,9 +11,9 @@ import java.util.Random;
  *
  * @author Ingemar
  */
-public class FlyBehavior extends Behavior {
+public class FlyBehavior extends MoveBehavior {
 
-    protected int lastChange;
+    protected int timeSinceChange;
 
     public FlyBehavior(Unit u) {
         super(u);
@@ -43,19 +43,22 @@ public class FlyBehavior extends Behavior {
 
     @Override
     public void move() {
-        lastChange += xSpeed;
-        if (lastChange > 50) {
+        if (timeSinceChange > 1000 * 500) {
             Random r = new Random();
             int i = r.nextInt(100) + 1;
             //chance of changing direction
             if (i > 50) {
                 changeDirection();
             }
-            lastChange = 0;
+            timeSinceChange = 0;
         }
         u.setXPos(u.getXPos() + xSpeed);
         u.setYPos(u.getYPos() + ySpeed);
-
+    }
+    
+    public void update(double dt){
+        super.update(dt);
+        timeSinceChange += dt;
     }
 
     @Override

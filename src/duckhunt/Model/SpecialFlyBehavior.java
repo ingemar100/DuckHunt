@@ -20,15 +20,15 @@ public class SpecialFlyBehavior extends FlyBehavior{
     
     @Override
     public void move(){
-        lastChange += xSpeed;
-        if (lastChange > 100) {
+        timeSinceChange += xSpeed;
+        if (timeSinceChange > 100) {
             Random r = new Random();
             int i = r.nextInt(100) + 1;
             //chance of changing direction
             if (i > 50) {
                 changeDirection();
             }
-            lastChange = 0;
+            timeSinceChange = 0;
         }
         u.setXPos(u.getXPos() + xSpeed);
         u.setYPos(u.getYPos() + ySpeed);

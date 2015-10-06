@@ -95,6 +95,7 @@ public class Game {
 
     public void update(double dt) {
         if (state == GameState.GAME) {
+            unitManager.move();
             unitManager.update(dt);
         }
     }

@@ -9,15 +9,20 @@ package duckhunt.Model;
  *
  * @author Ingemar
  */
-public abstract class Behavior {
+public abstract class MoveBehavior {
     protected Unit u;
     protected int xSpeed = 0;
     protected int ySpeed = 0;
+    protected double time = 0;
     
-    public Behavior(Unit u){
+    public MoveBehavior(Unit u){
         this.u = u;
         xSpeed = getDefaultRightSpeed();
         ySpeed = getDefaultUpSpeed();
+    }
+    
+    public void update(double dt){
+        time += dt;
     }
     
     public abstract void move();
