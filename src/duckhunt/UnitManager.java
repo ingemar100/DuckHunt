@@ -28,8 +28,8 @@ public class UnitManager {
     public void update(double dt) {
         time += dt;
         Iterator<Unit> it = units.iterator();
-        
-        while(it.hasNext()) {
+
+        while (it.hasNext()) {
             Unit unit = it.next();
             if (isOffscreen(unit.getXPos(), unit.getYPos())) {
                 it.remove();
@@ -56,7 +56,7 @@ public class UnitManager {
                         && p.y > (unit.getYPos() - unit.getRadius()) && p.y < unit.getYPos() + unit.getRadius()) {
                     unit.hit();
                     unitIter.remove();
-                    
+
                     addScore(unit.getKillPoints());
                 }
             }
@@ -77,28 +77,32 @@ public class UnitManager {
         scoreUntilSpecial -= score;
     }
 
+    /*
+     * Adds a unit if certain conditions are met 
+     */
     private void addDucks() {
+        Unit unit = null;
         if (scoreUntilSpecial <= 0) {
             scoreUntilSpecial = TIME_FOR_SPECIAL;
-            Unit spec = factory.create("Special");
-            spec.xPos = panel.getWidth() / 2;
-            spec.yPos = (int) (panel.getHeight() * 0.7);
-            units.add(spec);
-            System.out.println(spec);
-        }
-
-        if (time > nextUnitTime) {
-            Unit duck = factory.create("Bird");
-            duck.xPos = panel.getWidth() / 2;
-            duck.yPos = (int) (panel.getHeight() * 0.7);
-            units.add(duck);
+            unit = factory.create("Special");
+        } 
+        else if (time > nextUnitTime) {
+            unit = factory.create("Bird");
 
             //random spawntijd tussen 1-5 sec
             Random rn = new Random();
             int secs = rn.nextInt(MAX_SPAWN_TIME) + 1;
             nextUnitTime = secs * 1000 * 1000;
-//            System.out.println("create duck");
             time = 0;
+        }
+
+        if (unit != null) {
+            Random r = new Random();
+            int x = (int) (r.nextInt((int) (panel.getWidth() * 0.2)) + panel.getWidth() * 0.4);
+            
+            unit.xPos = x;
+            unit.yPos = (int) (panel.getHeight() * 0.7);
+            units.add(unit);
         }
     }
 
