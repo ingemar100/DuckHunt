@@ -13,9 +13,6 @@ abstract public class Unit extends Component {
     protected int xPos;
     protected int yPos = 500;
     private static final int RADIUS = 80;
-
-    protected int xSpeed = 0;
-    protected int ySpeed = 0;
     private int lastChange = 10;
 
     protected Image image;
@@ -42,22 +39,6 @@ abstract public class Unit extends Component {
     public void setYPos(int yPos) {
         this.yPos = yPos;
     }
-
-    public int getXSpeed() {
-        return xSpeed;
-    }
-
-    public int getYSpeed() {
-        return ySpeed;
-    }
-
-    public void setXSpeed(int xSpeed) {
-        this.xSpeed = xSpeed;
-    }
-
-    public void setYSpeed(int ySpeed) {
-        this.ySpeed = ySpeed;
-    }
     
     public int getRadius() {
         return RADIUS;
@@ -83,9 +64,9 @@ abstract public class Unit extends Component {
     }
 
     public void draw(Graphics g) {
-        if (xSpeed == behavior.getDefaultRightSpeed()) {
+        if (behavior.xSpeed == behavior.getDefaultRightSpeed()) {
             g.drawImage(image, xPos - RADIUS, yPos - RADIUS, 2 * RADIUS, 2 * RADIUS, null);
-        } else if (xSpeed == behavior.getDefaultLeftSpeed()) {
+        } else if (behavior.xSpeed == behavior.getDefaultLeftSpeed()) {
             g.drawImage(image, xPos, yPos - RADIUS, -2 * RADIUS, 2 * RADIUS, null);
         }
     }

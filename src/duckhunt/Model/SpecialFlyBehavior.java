@@ -20,7 +20,7 @@ public class SpecialFlyBehavior extends FlyBehavior{
     
     @Override
     public void move(){
-        lastChange += u.getXSpeed();
+        lastChange += xSpeed;
         if (lastChange > 100) {
             Random r = new Random();
             int i = r.nextInt(100) + 1;
@@ -30,8 +30,8 @@ public class SpecialFlyBehavior extends FlyBehavior{
             }
             lastChange = 0;
         }
-        u.setXPos(u.getXPos() + u.getXSpeed());
-        u.setYPos(u.getYPos() + u.getYSpeed());
+        u.setXPos(u.getXPos() + xSpeed);
+        u.setYPos(u.getYPos() + ySpeed);
 
     }
 

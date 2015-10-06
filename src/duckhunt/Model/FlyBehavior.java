@@ -19,32 +19,31 @@ public class FlyBehavior extends Behavior {
         super(u);
     }
 
-    @Override
     public void changeDirection() {
         Random rn = new Random();
         int n = 10;
         int i = rn.nextInt(n) + 1;
         if (i < 5) {
             //verander x richting
-            if (u.getXSpeed() == getDefaultRightSpeed()) {
-                u.setXSpeed(getDefaultLeftSpeed());
+            if (xSpeed == getDefaultRightSpeed()) {
+                xSpeed = getDefaultLeftSpeed();
 
             } else {
-                u.setXSpeed(getDefaultRightSpeed());
+                xSpeed = getDefaultRightSpeed();
             }
         } else if (i > 4) {
             //verander richting y
-            if (u.getYSpeed() == getDefaultDownSpeed()) {
-                u.setYSpeed(getDefaultUpSpeed());
+            if (ySpeed == getDefaultDownSpeed()) {
+                ySpeed = getDefaultUpSpeed();
             } else {
-                u.setYSpeed(getDefaultDownSpeed());
+                ySpeed = getDefaultDownSpeed();
             }
         }
     }
 
     @Override
     public void move() {
-        lastChange += u.getXSpeed();
+        lastChange += xSpeed;
         if (lastChange > 50) {
             Random r = new Random();
             int i = r.nextInt(100) + 1;
@@ -54,8 +53,8 @@ public class FlyBehavior extends Behavior {
             }
             lastChange = 0;
         }
-        u.setXPos(u.getXPos() + u.getXSpeed());
-        u.setYPos(u.getYPos() + u.getYSpeed());
+        u.setXPos(u.getXPos() + xSpeed);
+        u.setYPos(u.getYPos() + ySpeed);
 
     }
 

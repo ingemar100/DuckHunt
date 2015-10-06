@@ -15,20 +15,14 @@ public class WalkingBehavior extends Behavior {
 
     public WalkingBehavior(Unit u) {
         super(u);
-        u.setYSpeed(0);
-    }
-
-    @Override
-    public void changeDirection() {
-        u.setXSpeed(getDefaultRightSpeed());
-        u.setYSpeed(0);
+        ySpeed = 0;
     }
 
     @Override
     public void move() {
         
-        u.setXPos(u.getXPos() + u.getXSpeed());
-        u.setYPos(u.getYPos() + u.getYSpeed());
+        u.setXPos(u.getXPos() + xSpeed);
+        u.setYPos(u.getYPos() + ySpeed);
     }
 
     @Override

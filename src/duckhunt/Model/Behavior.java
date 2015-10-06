@@ -11,13 +11,14 @@ package duckhunt.Model;
  */
 public abstract class Behavior {
     protected Unit u;
+    protected int xSpeed = 0;
+    protected int ySpeed = 0;
     
     public Behavior(Unit u){
         this.u = u;
-        u.setXSpeed(getDefaultRightSpeed());
-        u.setYSpeed(getDefaultUpSpeed());
+        xSpeed = getDefaultRightSpeed();
+        ySpeed = getDefaultUpSpeed();
     }
-    public abstract void changeDirection();
     
     public abstract void move();
     
