@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package duckhunt;
+package duckhunt.Model;
 
 import javax.swing.ImageIcon;
 
@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 public class Psyduck extends Duck{
     @Override
     public String getImageLocation(){
-        return "Images/psyduck.gif";
+        return "../Images/psyduck.gif";
     }
     
     @Override

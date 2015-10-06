@@ -1,4 +1,4 @@
-package duckhunt;
+package duckhunt.Model;
 
 import java.util.Random;
 import javax.swing.ImageIcon;
@@ -41,7 +41,7 @@ public class Duck extends Unit {
 
     @Override
     protected String getImageLocation() {
-        return "Images/duck_hunt_bird_big2.gif";
+        return "../Images/duck_hunt_bird_big2.gif";
     }
 
     @Override

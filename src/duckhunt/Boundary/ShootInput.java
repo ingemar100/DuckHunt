@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package duckhunt;
+package duckhunt.Boundary;
 
+import duckhunt.Boundary.Input;
 import java.awt.Point;
 
 /**
  *
  * @author Ingemar
  */
-class ShootInput extends Input {
+public class ShootInput extends Input {
     private Point point;
 
     

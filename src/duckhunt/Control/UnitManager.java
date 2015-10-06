@@ -1,5 +1,8 @@
-package duckhunt;
+package duckhunt.Control;
 
+import duckhunt.Boundary.AnimationPanel;
+import duckhunt.Boundary.ShootInput;
+import duckhunt.Model.Unit;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -98,10 +101,13 @@ public class UnitManager {
 
         if (unit != null) {
             Random r = new Random();
-            int x = (int) (r.nextInt((int) (panel.getWidth() * 0.2)) + panel.getWidth() * 0.4);
             
-            unit.xPos = x;
-            unit.yPos = (int) (panel.getHeight() * 0.7);
+            int minX = (int) (panel.getWidth() * 0.4);
+            int xMargin = (int) (panel.getWidth() * 0.2);
+            int x = (r.nextInt(xMargin) + minX);
+            
+            unit.setXPos(x);
+            unit.setYPos((int) (panel.getHeight() * 0.7));
             units.add(unit);
         }
     }
@@ -112,8 +118,8 @@ public class UnitManager {
 
     private void openingScene() {
         Unit dog = factory.create("Chase");
-        dog.xPos = 0;
-        dog.yPos = 400;
+        dog.setXPos(0);
+        dog.setYPos(400);
         units.add(dog);
     }
 }

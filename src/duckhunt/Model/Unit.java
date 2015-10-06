@@ -1,5 +1,6 @@
-package duckhunt;
+package duckhunt.Model;
 
+import duckhunt.Control.Sound;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -48,6 +49,14 @@ abstract public class Unit extends Component {
         return yPos;
     }
 
+    public void setXPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setYPos(int yPos) {
+        this.yPos = yPos;
+    }
+
     public int getRadius() {
         return RADIUS;
     }
@@ -68,7 +77,7 @@ abstract public class Unit extends Component {
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(Duck.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Unit.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 Sound.COCK.play();
             }
@@ -76,7 +85,7 @@ abstract public class Unit extends Component {
         soundThread.start();
     }
 
-    protected void draw(Graphics g) {
+    public void draw(Graphics g) {
         if (xSpeed == RIGHT_SPEED) {
             g.drawImage(image, xPos - RADIUS, yPos - RADIUS, 2 * RADIUS, 2 * RADIUS, null);
         } else if (xSpeed == LEFT_SPEED) {

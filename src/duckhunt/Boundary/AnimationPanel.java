@@ -1,5 +1,7 @@
-package duckhunt;
+package duckhunt.Boundary;
 
+import duckhunt.Control.UnitManager;
+import duckhunt.Model.Unit;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -26,7 +28,7 @@ public class AnimationPanel extends JPanel {
     private Image backgroundImage;
 
     public AnimationPanel(InputContainer inputCont) {
-        backgroundImage = new ImageIcon(getClass().getResource("Images/background.png")).getImage();
+        backgroundImage = new ImageIcon(getClass().getResource("../Images/background.png")).getImage();
                 
         Image im = Toolkit.getDefaultToolkit().createImage("src/duckhunt/Images/crosshair.png");
         Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16,16),"custom cursor");
@@ -55,7 +57,7 @@ public class AnimationPanel extends JPanel {
 
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 
-        List<Unit> units = dm.getUnits();
+        List<Unit> units = (List<Unit>) dm.getUnits().clone();
         Iterator<Unit> it = units.iterator();
         while (it.hasNext()) {
             Unit u = it.next();

@@ -1,4 +1,4 @@
-package duckhunt;
+package duckhunt.Model;
 
 import javax.swing.ImageIcon;
 
@@ -20,7 +20,7 @@ public class Dog extends Unit {
 
     @Override
     protected String getImageLocation() {
-        return "Images/dog_with_duck_running.gif";
+        return "../Images/dog_with_duck_running.gif";
     }
 
     @Override

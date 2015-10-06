@@ -1,6 +1,8 @@
-package duckhunt;
+package duckhunt.Control;
 
-import java.awt.*;
+import duckhunt.Boundary.AnimationPanel;
+import duckhunt.Boundary.Input;
+import duckhunt.Boundary.InputContainer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;

@@ -1,5 +1,6 @@
-package duckhunt;
+package duckhunt.Control;
 
+import duckhunt.Model.Unit;
 import java.util.HashMap;
 
 public class UnitFactory {
@@ -27,9 +28,9 @@ public class UnitFactory {
     }
 
     private void vul() {
-        idMap.put("Bird", "duckhunt.Duck");
-        idMap.put("Chase", "duckhunt.Dog");
-        idMap.put("Chaser", "duckhunt.Goku");
-        idMap.put("Special", "duckhunt.Psyduck");
+        idMap.put("Bird", "duckhunt.Model.Duck");
+        idMap.put("Chase", "duckhunt.Model.Dog");
+        idMap.put("Chaser", "duckhunt.Model.Goku");
+        idMap.put("Special", "duckhunt.Model.Psyduck");
     }
 }

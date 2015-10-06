@@ -1,4 +1,4 @@
-package duckhunt;
+package duckhunt.Model;
 
 import javax.swing.ImageIcon;
 
@@ -16,7 +16,7 @@ public class Goku extends Unit {
 
     @Override
     protected String getImageLocation() {
-        return "Images/goku.gif";
+        return "../Images/goku.gif";
     }
 
     @Override
