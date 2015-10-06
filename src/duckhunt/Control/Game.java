@@ -11,7 +11,7 @@ import javax.swing.*;
 
 public class Game {
 
-    private AnimationPanel panel;
+    private AnimationPanel gamePanel;
     private GameMenu menuPanel;
     private final String GAME_NAME = "DuckDuckHunt";
     private final double FPS = 60;
@@ -19,7 +19,7 @@ public class Game {
     private UnitManager unitManager;
     private InputContainer inputCont = new InputContainer();
 
-    private GameState state = GameState.GAME;
+    private GameState state = GameState.MENU;
 
     private enum GameState {
         MENU, GAME
@@ -109,14 +109,16 @@ public class Game {
 
     public void addScore(int amount) {
         score += amount;
-        panel.setScore(score);
+        gamePanel.setScore(score);
     }
     
     private void createAndShowUI() {
-        panel = new AnimationPanel(inputCont);
+        gamePanel = new AnimationPanel(inputCont);
+        menuPanel = new GameMenu();
 
         JFrame frame = new JFrame(GAME_NAME);
-        frame.getContentPane().add(panel);
+        
+        frame.getContentPane().add(getActivePanel());
         frame.setExtendedState(frame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
@@ -126,8 +128,17 @@ public class Game {
         
         Sound.BACKGROUND.loop();
         
-        menuPanel = new GameMenu();
-        unitManager = new UnitManager(panel, this);
-        panel.setManager(unitManager);
+        unitManager = new UnitManager(gamePanel, this);
+        gamePanel.setManager(unitManager);
+    }
+    
+    private JPanel getActivePanel(){
+        if (state == GameState.GAME){
+            return gamePanel;
+        }
+        else if (state == GameState.MENU){
+            return menuPanel;
+        }
+        return null;
     }
 }
