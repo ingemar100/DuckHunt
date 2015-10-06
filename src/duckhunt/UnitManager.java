@@ -3,6 +3,8 @@ package duckhunt;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UnitManager implements ShootingListener {
 
@@ -36,7 +38,7 @@ public class UnitManager implements ShootingListener {
             //controleer of eend buiten scherm is
             if (isOffscreen(unit.getXPos(), unit.getYPos())) {
                 deadUnits.add(unit);
-                Sound.OFFSCREEN.play();
+                //Sound.OFFSCREEN.play();
             } else {
                 if (shooting) {
                     if (shotLocation.x > (unit.getXPos() - unit.getRadius()) && shotLocation.x < unit.getXPos() + unit.getRadius()
@@ -70,11 +72,33 @@ public class UnitManager implements ShootingListener {
     private void addDucks() {
         if (scoreUntilSpecial <= 0) {
             scoreUntilSpecial = TIME_FOR_SPECIAL;
-            Unit spec = factory.create("Special");
-            spec.xPos = panel.getWidth() / 2;
-            spec.yPos = (int) (panel.getHeight() * 0.7);
-            units.add(spec);
-            System.out.println(spec);
+
+            Thread soundThreadDelay = new Thread() {
+                public void run() {
+                    Sound.BACKGROUND.stop();
+                    Sound.BONUS.play();
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(UnitManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    Unit spec = factory.create("Special");
+                    spec.xPos = panel.getWidth() / 2;
+                    spec.yPos = (int) (panel.getHeight() * 0.7);
+                    units.add(spec);
+                    System.out.println(spec);
+
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(UnitManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    Sound.BACKGROUND.loop();
+                }
+            };
+            soundThreadDelay.start();
         }
 
         if (time > nextUnitTime) {

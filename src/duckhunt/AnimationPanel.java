@@ -1,6 +1,5 @@
 package duckhunt;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -15,14 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Cursor;
 import java.awt.Image;
-import java.awt.Panel;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
 public class AnimationPanel extends JPanel {
@@ -33,9 +25,13 @@ public class AnimationPanel extends JPanel {
     private UnitManager dm;
 
     private Image backgroundImage;
+    
+    Image startButton;
 
     public AnimationPanel() {
         backgroundImage = new ImageIcon(getClass().getResource("Images/background.png")).getImage();
+        
+        startButton = new ImageIcon(getClass().getResource("Images/startButton.png")).getImage();
                 
         Image im = Toolkit.getDefaultToolkit().createImage("src/duckhunt/Images/crosshair.png");
         Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16,16),"custom cursor");

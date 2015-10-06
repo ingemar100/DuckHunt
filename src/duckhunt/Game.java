@@ -1,21 +1,29 @@
 package duckhunt;
 
-import java.awt.*;
 import javax.swing.*;
 
 public class Game {
 
     private AnimationPanel panel;
+    private GameMenu menuPanel;
     private final String GAME_NAME = "DuckDuckHunt";
     private final double FPS = 60;
     private int score = 0;
     private UnitManager um;
 
+    private GameState state = GameState.GAME;
+
+    private enum GameState {
+
+        MENU, GAME
+    };
+
     private void createAndShowUI() {
         panel = new AnimationPanel();
+        menuPanel = new GameMenu();
         um = new UnitManager(panel, this);
         panel.setManager(um);
-        
+
         JFrame frame = new JFrame(GAME_NAME);
         frame.getContentPane().add(panel);
         frame.setExtendedState(frame.MAXIMIZED_BOTH);
@@ -25,8 +33,8 @@ public class Game {
         frame.setVisible(true);
         Sound.BACKGROUND.loop();
     }
-    
-    public void gameLoop(){
+
+    public void gameLoop() {
         Thread threadForInitGame = new Thread() {
             public void run() {
                 createAndShowUI();
@@ -41,21 +49,21 @@ public class Game {
                 int upsCount = 0;
                 int fpsCount = 0;
                 double lastSecond = 0;
-                
+
                 while (running) {
 
                     double newTime = timeInMicroseconds();
                     double renderFrameTime = newTime - currentTime;
                     currentTime = newTime;
 
-                    if ((newTime - lastSecond) > 1000 * 1000){
+                    if ((newTime - lastSecond) > 1000 * 1000) {
                         lastSecond = newTime;
                         System.out.println(upsCount);
                         System.out.println(fpsCount);
                         upsCount = 0;
                         fpsCount = 0;
                     }
-                    
+
                     accumulator += renderFrameTime;
 
                     while (accumulator >= dt) {
@@ -63,11 +71,11 @@ public class Game {
                         accumulator -= dt;
                         t += dt;
                         upsCount++;
-                        
+
                     }
                     render();
                     fpsCount++;
-                    
+
                 }
             }
         };
@@ -80,12 +88,19 @@ public class Game {
 
     public void update(double dt) {
 //        System.out.println("update");
-        um.update(dt);
+        if (state == GameState.GAME) {
+            um.update(dt);
+        }
     }
 
     public void render() {
 //        System.out.println("render");
-        um.render();
+
+        if (state == GameState.MENU) {
+            menuPanel.render();
+        } else if (state == GameState.GAME) {
+            um.render();
+        }
     }
 
     public void addScore(int amount) {
