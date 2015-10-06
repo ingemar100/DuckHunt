@@ -9,12 +9,6 @@ public class Goku extends Unit {
     }
 
     @Override
-    protected void move() {
-        ySpeed = 0;
-        xSpeed = RIGHT_SPEED;
-    }
-
-    @Override
     protected String getImageLocation() {
         return "../Images/goku.gif";
     }
@@ -22,5 +16,10 @@ public class Goku extends Unit {
     @Override
     public int getKillPoints() {
         return 9001;
+    }
+
+    @Override
+    protected void setBehavior() {
+        behavior = new TestBehavior();
     }
 }

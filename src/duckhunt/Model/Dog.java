@@ -13,12 +13,6 @@ public class Dog extends Unit {
     }
 
     @Override
-    protected void move() {
-        ySpeed = 0;
-        xSpeed = RIGHT_SPEED;
-    }
-
-    @Override
     protected String getImageLocation() {
         return "../Images/dog_with_duck_running.gif";
     }
@@ -26,6 +20,11 @@ public class Dog extends Unit {
     @Override
     public int getKillPoints() {
         return 250;
+    }
+
+    @Override
+    protected void setBehavior() {
+        behavior = new WalkingBehavior();
     }
 
 }

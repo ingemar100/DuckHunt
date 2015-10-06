@@ -13,32 +13,32 @@ abstract public class Unit extends Component {
     protected int xPos;
     protected int yPos = 500;
     private static final int RADIUS = 80;
-    protected static final int LEFT_SPEED = -10;
-    protected static final int RIGHT_SPEED = 10;
-    protected static final int UP_SPEED = -4;
-    protected static final int DOWN_SPEED = 4;
+    public static final int DEF_LEFT_SPEED = -10;
+    public static final int DEF_RIGHT_SPEED = 10;
+    public static final int DEF_UP_SPEED = -4;
+    public static final int DEF_DOWN_SPEED = 4;
 
-    protected int xSpeed = RIGHT_SPEED;
-    protected int ySpeed = UP_SPEED;
-    protected int maxY;
+    protected int xSpeed = DEF_RIGHT_SPEED;
+    protected int ySpeed = DEF_UP_SPEED;
     private int lastChange = 10;
 
     protected Image image;
+    protected Behavior behavior;
 
     public Unit(int initialX, int initialY) {
 
         xPos = initialX;
         yPos = initialY;
         lastChange = initialX;
-        maxY = initialY;
 
         move();
         loadImage();
     }
     
     public Unit(){
-        move();
         loadImage();
+        setBehavior();
+        move();
     }
 
     public int getXPos() {
@@ -57,6 +57,22 @@ abstract public class Unit extends Component {
         this.yPos = yPos;
     }
 
+    public int getXSpeed() {
+        return xSpeed;
+    }
+
+    public int getYSpeed() {
+        return ySpeed;
+    }
+
+    public void setXSpeed(int xSpeed) {
+        this.xSpeed = xSpeed;
+    }
+
+    public void setYSpeed(int ySpeed) {
+        this.ySpeed = ySpeed;
+    }
+    
     public int getRadius() {
         return RADIUS;
     }
@@ -86,14 +102,16 @@ abstract public class Unit extends Component {
     }
 
     public void draw(Graphics g) {
-        if (xSpeed == RIGHT_SPEED) {
+        if (xSpeed == DEF_RIGHT_SPEED) {
             g.drawImage(image, xPos - RADIUS, yPos - RADIUS, 2 * RADIUS, 2 * RADIUS, null);
-        } else if (xSpeed == LEFT_SPEED) {
+        } else if (xSpeed == DEF_LEFT_SPEED) {
             g.drawImage(image, xPos, yPos - RADIUS, -2 * RADIUS, 2 * RADIUS, null);
         }
     }
     
-    abstract protected void move();
+    private void move(){
+        behavior.move(this);
+    }
     
     protected void loadImage(){
         String loc = getImageLocation();
@@ -104,4 +122,5 @@ abstract public class Unit extends Component {
     
     abstract public int getKillPoints();
 
+    abstract protected void setBehavior();
 }
