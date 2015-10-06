@@ -92,5 +92,7 @@ abstract public class Unit extends Component {
     }
     
     abstract protected String getImageLocation();
+    
+    abstract public int getKillPoints();
 
 }

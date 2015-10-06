@@ -18,4 +18,9 @@ public class Goku extends Unit {
     protected String getImageLocation() {
         return "Images/goku.gif";
     }
+
+    @Override
+    public int getKillPoints() {
+        return 9001;
+    }
 }

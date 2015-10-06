@@ -20,7 +20,6 @@ import java.awt.Toolkit;
 @SuppressWarnings("serial")
 public class AnimationPanel extends JPanel {
 
-    private Point shotLocation;
     private JLabel scoreLabel = new JLabel("0");
     private UnitManager dm;
 

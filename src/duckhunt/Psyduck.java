@@ -12,7 +12,13 @@ import javax.swing.ImageIcon;
  * @author Ingemar
  */
 public class Psyduck extends Duck{
+    @Override
     public String getImageLocation(){
         return "Images/psyduck.gif";
+    }
+    
+    @Override
+    public int getKillPoints(){
+        return 500;
     }
 }

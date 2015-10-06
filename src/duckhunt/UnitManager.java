@@ -9,16 +9,15 @@ import java.util.Random;
 public class UnitManager {
 
     private ArrayList<Unit> units = new ArrayList();
-    private final int KILL_POINTS = 100;
-    private AnimationPanel panel;
-    private Game game;
+    private final AnimationPanel panel;
+    private final Game game;
     private double time = 0;
     private final int MAX_SPAWN_TIME = 5; //seconds
     private int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000;
     private final int TIME_FOR_SPECIAL = 1000;
     private int scoreUntilSpecial = TIME_FOR_SPECIAL;
 
-    private UnitFactory factory = new UnitFactory();
+    private final UnitFactory factory = new UnitFactory();
 
     public UnitManager(AnimationPanel panelParam, Game game) {
         this.game = game;
@@ -28,7 +27,6 @@ public class UnitManager {
 
     public void update(double dt) {
         time += dt;
-        addDucks();
         Iterator<Unit> it = units.iterator();
         
         while(it.hasNext()) {
@@ -40,6 +38,7 @@ public class UnitManager {
                 unit.update();
             }
         }
+        addDucks();
     }
 
     public void collide(List<ShootInput> shots) {
@@ -58,7 +57,7 @@ public class UnitManager {
                     unit.hit();
                     unitIter.remove();
                     
-                    addScore(KILL_POINTS);
+                    addScore(unit.getKillPoints());
                 }
             }
         }
@@ -69,6 +68,7 @@ public class UnitManager {
     }
 
     public void render() {
+        //panel calls draw on units
         panel.repaint();
     }
 

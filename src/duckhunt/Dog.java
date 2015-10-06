@@ -23,4 +23,9 @@ public class Dog extends Unit {
         return "Images/dog_with_duck_running.gif";
     }
 
+    @Override
+    public int getKillPoints() {
+        return 250;
+    }
+
 }

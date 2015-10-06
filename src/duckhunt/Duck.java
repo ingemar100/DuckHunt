@@ -43,4 +43,9 @@ public class Duck extends Unit {
     protected String getImageLocation() {
         return "Images/duck_hunt_bird_big2.gif";
     }
+
+    @Override
+    public int getKillPoints() {
+        return 100;
+    }
 }
