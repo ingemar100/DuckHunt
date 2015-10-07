@@ -7,7 +7,7 @@ package duckhunt.Model;
 
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.ShootInput;
-import duckhunt.Control.Game;
+import duckhunt.Control.Engine;
 import java.applet.AudioClip;
 import java.util.List;
 import javax.swing.JPanel;
@@ -19,10 +19,10 @@ import javax.swing.JPanel;
 abstract public class BaseLevelState {
 
     protected int score = 0;
-    protected Game game;
+    protected Engine game;
 
     public BaseLevelState() {
-        this.game = Game.getInstance();
+        this.game = Engine.getInstance();
         getMusic().loop();
     }
 

@@ -4,6 +4,7 @@ import duckhunt.Model.LevelFactory;
 import duckhunt.Model.Level1;
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.InputContainer;
+import duckhunt.Boundary.View;
 import duckhunt.Model.Menu;
 import duckhunt.Model.BaseLevelState;
 import java.awt.Toolkit;
@@ -12,19 +13,18 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.*;
 
-public class Game {
+public class Engine {
 
-    private JFrame frame;
+    private View view;
     private final String GAME_NAME = "DuckDuckHunt";
     private final double FPS = 60;
     private InputContainer inputCont;
-    private static Game instance;
+    private static Engine instance;
 
     private BaseLevelState currentLevel;
 
-    private Game() {
-
-        frame = new JFrame(GAME_NAME);
+    private Engine() {
+        view = new View(GAME_NAME);
         inputCont = InputContainer.getInstance();
     }
 
@@ -32,6 +32,9 @@ public class Game {
         Thread threadForInitGame = new Thread() {
             public void run() {
                 setLevel(LevelFactory.nextLevel(null));
+                
+                view.createAndShowUI();
+                
                 double t = 0;
 
                 final double dt = 1000000 / FPS;
@@ -103,33 +106,18 @@ public class Game {
         currentLevel.render();
     }
 
-    private void createAndShowUI() {
-
-        frame.getContentPane().removeAll();
-        frame.getContentPane().add(getActivePanel());
-        frame.setExtendedState(frame.MAXIMIZED_BOTH);
-        frame.setMinimumSize(Toolkit.getDefaultToolkit().getScreenSize());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setUndecorated(true);
-
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-    }
-
     private JPanel getActivePanel() {
         return currentLevel.getPanel();
     }
 
     public void setLevel(BaseLevelState level) {
         currentLevel = level;
-        createAndShowUI();
+        view.setPanel(getActivePanel());
     }
 
-    public static Game getInstance() {
+    public static Engine getInstance() {
         if (instance == null) {
-            instance = new Game();
+            instance = new Engine();
         }
         return instance;
     }

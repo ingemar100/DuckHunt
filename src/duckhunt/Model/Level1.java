@@ -3,7 +3,7 @@ package duckhunt.Model;
 import duckhunt.Boundary.AnimationPanel;
 import duckhunt.Boundary.InputContainer;
 import duckhunt.Boundary.ShootInput;
-import duckhunt.Control.Game;
+import duckhunt.Control.Engine;
 import duckhunt.Control.Sound;
 import duckhunt.Control.UnitManager;
 import duckhunt.Model.BaseLevelState;

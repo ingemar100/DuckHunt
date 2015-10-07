@@ -3,7 +3,7 @@ package duckhunt.Model;
 import duckhunt.Boundary.InputContainer;
 import duckhunt.Boundary.InputContainer;
 import duckhunt.Boundary.ShootInput;
-import duckhunt.Control.Game;
+import duckhunt.Control.Engine;
 import duckhunt.Control.Sound;
 import duckhunt.Model.Button;
 import java.applet.AudioClip;
