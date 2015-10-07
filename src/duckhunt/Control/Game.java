@@ -3,25 +3,27 @@ package duckhunt.Control;
 import duckhunt.Boundary.AnimationPanel;
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.InputContainer;
-import duckhunt.GameMenu;
+import duckhunt.Boundary.Menu;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.*;
 
 public class Game {
-
+    private JFrame frame;
     private AnimationPanel gamePanel;
-    private GameMenu menuPanel;
+    private Menu menuPanel;
     private final String GAME_NAME = "DuckDuckHunt";
     private final double FPS = 60;
     private int score = 0;
     private UnitManager unitManager;
     private InputContainer inputCont = new InputContainer();
 
-    private GameState state = GameState.GAME;
+    private GameState state = GameState.MENU;
 
-    private enum GameState {
+    public enum GameState {
+
         MENU, GAME
     };
 
@@ -42,7 +44,6 @@ public class Game {
                 double lastSecond = 0;
 
                 while (running) {
-               
 
                     double newTime = timeInMicroseconds();
                     double renderFrameTime = newTime - currentTime;
@@ -59,8 +60,6 @@ public class Game {
                     accumulator += renderFrameTime;
 
                     while (accumulator >= dt) {
-                        ArrayList shots = readInput();
-                        unitManager.collide(shots);
                         update(dt);
                         accumulator -= dt;
                         t += dt;
@@ -80,24 +79,32 @@ public class Game {
         return System.nanoTime() / 1000.0;
     }
 
-    private ArrayList<Input> readInput() {
-        ArrayList<Input> shots = new ArrayList<>();
+    private LinkedList<Input> readInput() {
+//        ArrayList<Input> shots = new ArrayList<>();
         LinkedList<Input> inputs = inputCont.getInputs();
-        
-        Iterator<Input> it = inputs.iterator();
-        while(it.hasNext()){
-            Input i = it.next();
-            shots.add(i);
-        }
-        
-        return shots;
+
+//        Iterator<Input> it = inputs.iterator();
+//        while (it.hasNext()) {
+//            Input i = it.next();
+//            shots.add(i);
+//        }
+
+        return inputs;
     }
 
     public void update(double dt) {
         if (state == GameState.GAME) {
+            LinkedList shots = readInput();
+            unitManager.collide(shots);
             unitManager.move();
             unitManager.update(dt);
+        } else if (state == GameState.MENU) {
+            LinkedList shots = readInput();
+            menuPanel.collide(shots);
+            menuPanel.move();
+            menuPanel.update(dt);
         }
+
     }
 
     public void render() {
@@ -112,33 +119,39 @@ public class Game {
         score += amount;
         gamePanel.setScore(score);
     }
-    
+
     private void createAndShowUI() {
         gamePanel = new AnimationPanel(inputCont);
-        menuPanel = new GameMenu(inputCont);
+        menuPanel = new Menu(inputCont, this);
 
-        JFrame frame = new JFrame(GAME_NAME);
-        
+        frame = new JFrame(GAME_NAME);
         frame.getContentPane().add(getActivePanel());
         frame.setExtendedState(frame.MAXIMIZED_BOTH);
+        frame.setMinimumSize(Toolkit.getDefaultToolkit().getScreenSize());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setUndecorated(true);
+        
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-               
+
         unitManager = new UnitManager(gamePanel, this);
         gamePanel.setManager(unitManager);
     }
-    
-    private JPanel getActivePanel(){
-        if (state == GameState.GAME){
+
+    private JPanel getActivePanel() {
+        if (state == GameState.GAME) {
             Sound.BACKGROUND.loop();
             return gamePanel;
-        }
-        else if (state == GameState.MENU){
+        } else if (state == GameState.MENU) {
             Sound.MAINMENU.loop();
             return menuPanel;
         }
         return null;
+    }
+    
+    public void setState(GameState state){
+        this.state = state;
+        createAndShowUI();
     }
 }
