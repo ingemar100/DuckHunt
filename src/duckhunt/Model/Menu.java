@@ -1,9 +1,7 @@
 package duckhunt.Model;
 
 import duckhunt.Boundary.InputContainer;
-import duckhunt.Boundary.InputContainer;
 import duckhunt.Boundary.ShootInput;
-import duckhunt.Control.Engine;
 import duckhunt.Control.Sound;
 import duckhunt.Model.Button;
 import java.applet.AudioClip;
@@ -13,14 +11,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Menu extends BaseLevelState{
@@ -55,7 +47,7 @@ public class Menu extends BaseLevelState{
                 changeLevel();
             }
             else if (credits.testClick(i.getPoint())) {
-                //show credits
+                JOptionPane.showMessageDialog(null, "DuckDuckHunt™,\nMade by Selman Karasu and Ingemar Kok\n®2015 DuckDuckHunt productions");
             }
             else if (exit.testClick(i.getPoint())) {
                 //exit
