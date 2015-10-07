@@ -19,8 +19,9 @@ import java.util.List;
 public class InputContainer implements MouseListener {
 
     private LinkedList<Input> inputs;
+    private static InputContainer instance;
 
-    public InputContainer() {
+    private InputContainer() {
         inputs = new LinkedList<>();
     }
 
@@ -54,5 +55,12 @@ public class InputContainer implements MouseListener {
     @Override
     public void mouseExited(MouseEvent me) {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public static InputContainer getInstance(){
+        if (instance == null){
+            instance = new InputContainer();
+        }
+        return instance;
     }
 }

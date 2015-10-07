@@ -1,6 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package duckhunt.Control;
 
-import duckhunt.Boundary.AnimationPanel;
+import duckhunt.Model.Level1;
 import duckhunt.Boundary.ShootInput;
 import duckhunt.Model.Unit;
 import java.awt.Point;
@@ -8,46 +13,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+/**
+ *
+ * @author Ingemar
+ */
 public class UnitManager {
-
+    
+    private Level1 level;
     private ArrayList<Unit> units = new ArrayList();
-    private final AnimationPanel panel;
-    private final Game game;
-    private double time = 0;
-    private final int MAX_SPAWN_TIME = 5; //seconds
-    private int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000; //microseconds
-    private final int TIME_FOR_SPECIAL = 1000;
-    private int scoreUntilSpecial = TIME_FOR_SPECIAL;
-
-    private final UnitFactory factory = new UnitFactory();
-
-    public UnitManager(AnimationPanel panelParam, Game game) {
-        this.game = game;
-        panel = panelParam;
-        openingScene();
+    
+    public UnitManager(Level1 level){
+        this.level = level;
     }
     
-    public void update(double dt){
-        time += dt;
-        Iterator<Unit> it = units.iterator();
-
-        while (it.hasNext()) {
-            Unit unit = it.next();
-            if (isOffscreen(unit.getXPos(), unit.getYPos())) {
-                it.remove();
-                Sound.OFFSCREEN.play();
-            }
-            else {
-                unit.update(dt);
-            }
-        }
-        addDucks();
-    }
-
-    public void move() {
+    public void move(){
+        
         Iterator<Unit> it = units.iterator();
 
         while (it.hasNext()) {
@@ -55,8 +36,8 @@ public class UnitManager {
             unit.move();
         }
     }
-
-    public void collide(List<ShootInput> shots) {
+    
+    public void collide(List<ShootInput> shots){
         Iterator<ShootInput> it = shots.iterator();
 
         while (it.hasNext()) {
@@ -72,93 +53,56 @@ public class UnitManager {
                     unit.hit();
                     unitIter.remove();
 
-                    addScore(unit.getKillPoints());
+                    level.addScore(unit.getKillPoints());
                 }
             }
         }
     }
+    
+    public void update(double dt){
+        Iterator<Unit> it = units.iterator();
 
-    public ArrayList<Unit> getUnits() {
-        return units;
-    }
-
-    public void render() {
-        //panel calls draw on units
-        panel.repaint();
-    }
-
-    private void addScore(int score) {
-        game.addScore(score);
-        scoreUntilSpecial -= score;
-    }
-
-    /*
-     * Adds a unit if certain conditions are met 
-     */
-    private void addDucks() {
-        if (scoreUntilSpecial <= 0) {
-            scoreUntilSpecial = TIME_FOR_SPECIAL;
-
-            Thread soundThreadDelay = new Thread() {
-                public void run() {
-                    Sound.BACKGROUND.stop();
-                    Sound.BONUS.play();
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(duckhunt.Control.UnitManager.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    
-                    Unit unit = factory.create("Special");
-                    addUnit(unit);
-                    System.out.println(unit);
-                    
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(duckhunt.Control.UnitManager.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    Sound.BACKGROUND.loop();
-                }
-            };
-            soundThreadDelay.start();
-        } else if (time > nextUnitTime) {
-            Unit unit = factory.create("Bird");
-
-            //random spawntijd tussen 1-5 sec
-            Random rn = new Random();
-            int secs = rn.nextInt(MAX_SPAWN_TIME) + 1;
-            nextUnitTime = secs * 1000 * 1000;
-            time = 0;
-
-            addUnit(unit);
+        while (it.hasNext()) {
+            Unit unit = it.next();
+            if (isOffscreen(unit.getXPos(), unit.getYPos())) {
+                it.remove();
+                Sound.OFFSCREEN.play();
+            }
+            else {
+                unit.update(dt);
+            }
         }
     }
-
-    private void addUnit(Unit unit) {
-        Random r = new Random();
-
-        int minX = (int) (panel.getWidth() * 0.4);
-        int xMargin = (int) (panel.getWidth() * 0.2);
-        int x = (r.nextInt(xMargin) + minX);
-
-        unit.setXPos(x);
-        unit.setYPos(getSpawnHeight());
-        units.add(unit);
+    
+    public ArrayList<Unit> getUnits() {
+        return (ArrayList<Unit>) units.clone();
     }
 
     private boolean isOffscreen(int x, int y) {
-        return x < 0 || x > panel.getWidth() || y < 0 || y > panel.getHeight();
+        return x < 0 || x > level.getPanel().getWidth() || y < 0 || y > level.getPanel().getHeight();
     }
+    
+    public void addUnit(Unit unit) {
+        Random r = new Random();
 
-    private void openingScene() {
-        Unit dog = factory.create("Chase");
-        dog.setXPos(0);
-        dog.setYPos(getSpawnHeight());
-        units.add(dog);
+        int minX = (int) (level.getPanel().getWidth() * 0.4);
+        int xMargin = (int) (level.getPanel().getWidth() * 0.2);
+        int x = (r.nextInt(xMargin) + minX);
+
+        addUnit(unit, x, getSpawnHeight());
+    }
+    
+    public void addUnit(Unit unit, int x, int y){        
+        unit.setXPos(x);
+        unit.setYPos(y);
+        units.add(unit);
+    }
+    
+    public void addUnit(Unit unit, int x){
+        addUnit(unit, x, getSpawnHeight());
     }
     
     private int getSpawnHeight(){
-        return (int) (panel.getHeight() * 0.7);
+        return (int) (level.getPanel().getHeight() * 0.7);
     }
 }

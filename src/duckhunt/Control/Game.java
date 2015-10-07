@@ -1,9 +1,10 @@
 package duckhunt.Control;
 
-import duckhunt.Boundary.AnimationPanel;
+import duckhunt.Model.Level1;
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.InputContainer;
-import duckhunt.Boundary.Menu;
+import duckhunt.Model.Menu;
+import duckhunt.Model.BaseLevelState;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,26 +12,25 @@ import java.util.LinkedList;
 import javax.swing.*;
 
 public class Game {
+
     private JFrame frame;
-    private AnimationPanel gamePanel;
-    private Menu menuPanel;
     private final String GAME_NAME = "DuckDuckHunt";
     private final double FPS = 60;
-    private int score = 0;
-    private UnitManager unitManager;
-    private InputContainer inputCont = new InputContainer();
+    private InputContainer inputCont;
+    private static Game instance;
 
-    private GameState state = GameState.MENU;
+    private BaseLevelState currentLevel;
 
-    public enum GameState {
+    private Game() {
 
-        MENU, GAME
-    };
+        frame = new JFrame(GAME_NAME);
+        inputCont = InputContainer.getInstance();
+    }
 
     public void gameLoop() {
         Thread threadForInitGame = new Thread() {
             public void run() {
-                createAndShowUI();
+                setLevel(LevelFactory.nextLevel(null));
                 double t = 0;
 
                 final double dt = 1000000 / FPS;
@@ -88,70 +88,48 @@ public class Game {
 //            Input i = it.next();
 //            shots.add(i);
 //        }
-
         return inputs;
     }
 
     public void update(double dt) {
-        if (state == GameState.GAME) {
-            LinkedList shots = readInput();
-            unitManager.collide(shots);
-            unitManager.move();
-            unitManager.update(dt);
-        } else if (state == GameState.MENU) {
-            LinkedList shots = readInput();
-            menuPanel.collide(shots);
-            menuPanel.move();
-            menuPanel.update(dt);
-        }
-
+        LinkedList shots = readInput();
+        currentLevel.collide(shots);
+        currentLevel.move();
+        currentLevel.update(dt);
     }
 
     public void render() {
-        if (state == GameState.MENU) {
-            menuPanel.render();
-        } else if (state == GameState.GAME) {
-            unitManager.render();
-        }
-    }
-
-    public void addScore(int amount) {
-        score += amount;
-        gamePanel.setScore(score);
+        currentLevel.render();
     }
 
     private void createAndShowUI() {
-        gamePanel = new AnimationPanel(inputCont);
-        menuPanel = new Menu(inputCont, this);
 
-        frame = new JFrame(GAME_NAME);
+        frame.getContentPane().removeAll();
         frame.getContentPane().add(getActivePanel());
         frame.setExtendedState(frame.MAXIMIZED_BOTH);
         frame.setMinimumSize(Toolkit.getDefaultToolkit().getScreenSize());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        frame.setUndecorated(true);
-        
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        unitManager = new UnitManager(gamePanel, this);
-        gamePanel.setManager(unitManager);
     }
 
     private JPanel getActivePanel() {
-        if (state == GameState.GAME) {
-            Sound.BACKGROUND.loop();
-            return gamePanel;
-        } else if (state == GameState.MENU) {
-            Sound.MAINMENU.loop();
-            return menuPanel;
-        }
-        return null;
+        return currentLevel.getPanel();
     }
-    
-    public void setState(GameState state){
-        this.state = state;
+
+    public void setLevel(BaseLevelState level) {
+        currentLevel = level;
         createAndShowUI();
+    }
+
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
     }
 }
