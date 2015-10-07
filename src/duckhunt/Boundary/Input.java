@@ -6,8 +6,6 @@
  */
 package duckhunt.Boundary;
 
-import duckhunt.Model.Duck;
-
 /**
  *
  * @author Ingemar

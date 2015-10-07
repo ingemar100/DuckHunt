@@ -115,7 +115,7 @@ public class Game {
     
     private void createAndShowUI() {
         gamePanel = new AnimationPanel(inputCont);
-        menuPanel = new GameMenu();
+        menuPanel = new GameMenu(inputCont);
 
         JFrame frame = new JFrame(GAME_NAME);
         
@@ -125,19 +125,18 @@ public class Game {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        
-        
-        Sound.BACKGROUND.loop();
-        
+               
         unitManager = new UnitManager(gamePanel, this);
         gamePanel.setManager(unitManager);
     }
     
     private JPanel getActivePanel(){
         if (state == GameState.GAME){
+            Sound.BACKGROUND.loop();
             return gamePanel;
         }
         else if (state == GameState.MENU){
+            Sound.MAINMENU.loop();
             return menuPanel;
         }
         return null;
