@@ -27,8 +27,8 @@ public class Menu extends BaseLevelState{
 
     private Image mainMenuTitle;
     private Button start;
-    private Button options;
     private Button credits;
+    private Button exit;
     private MenuPanel panel;
     private InputContainer inputCont;
 
@@ -41,8 +41,8 @@ public class Menu extends BaseLevelState{
 
         mainMenuTitle = new ImageIcon(getClass().getResource("../Images/MainMenuTitle.jpg")).getImage();
         start = new Button("../Images/StartGameButton.png", panel.getWidth() / 3, panel.getHeight() / 2, 300, 100);
-        options = new Button("../Images/CreditsButton.png", panel.getWidth() / 3, panel.getHeight() / 2 + 80, 300, 100);
-        credits = new Button("../Images/ExitGame.png", panel.getWidth() / 3, panel.getHeight() / 2 + 160, 300, 100);
+        credits = new Button("../Images/CreditsButton.png", panel.getWidth() / 3, panel.getHeight() / 2 + 80, 300, 100);
+        exit = new Button("../Images/ExitGame.png", panel.getWidth() / 3, panel.getHeight() / 2 + 160, 300, 100);
     }
 
     public void collide(List<ShootInput> inputs) {
@@ -54,12 +54,18 @@ public class Menu extends BaseLevelState{
             if (start.testClick(i.getPoint())) {
                 changeLevel();
             }
+            if (credits.testClick(i.getPoint())) {
+                //show credits
+            }
+            if (exit.testClick(i.getPoint())) {
+                //exit
+            }
         }
     }
 
     @Override
     public void move() {
-
+        //buttons dont move
     }
 
     @Override
@@ -97,8 +103,8 @@ public class Menu extends BaseLevelState{
 
             g.drawImage(mainMenuTitle, this.getWidth() / 3, 0, 600, 300, null);
             start.draw(g);
-            options.draw(g);
             credits.draw(g);
+            exit.draw(g);
         }
     }
 }

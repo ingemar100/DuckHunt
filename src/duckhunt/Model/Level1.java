@@ -87,9 +87,10 @@ public class Level1 extends BaseLevelState {
         if (scoreUntilSpecial <= 0) {
             scoreUntilSpecial = TIME_FOR_SPECIAL;
 
+            AudioClip music = getMusic();
             Thread soundThreadDelay = new Thread() {
                 public void run() {
-                    Sound.BACKGROUND.stop();
+                    music.stop();
                     Sound.BONUS.play();
                     try {
                         Thread.sleep(2000);
@@ -106,7 +107,7 @@ public class Level1 extends BaseLevelState {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(duckhunt.Model.Level1.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    Sound.BACKGROUND.loop();
+                    music.loop();
                 }
             };
             soundThreadDelay.start();

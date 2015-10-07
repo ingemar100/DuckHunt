@@ -27,10 +27,6 @@ public class Button {
         image = new ImageIcon(getClass().getResource(imageLoc)).getImage();
     }
 
-    protected String getImageLocation() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public void draw(Graphics g) {
         g.drawImage(image, x, y, width, height, null);
     }
