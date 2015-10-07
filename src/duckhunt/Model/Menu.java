@@ -54,11 +54,12 @@ public class Menu extends BaseLevelState{
             if (start.testClick(i.getPoint())) {
                 changeLevel();
             }
-            if (credits.testClick(i.getPoint())) {
+            else if (credits.testClick(i.getPoint())) {
                 //show credits
             }
-            if (exit.testClick(i.getPoint())) {
+            else if (exit.testClick(i.getPoint())) {
                 //exit
+                game.stop();
             }
         }
     }

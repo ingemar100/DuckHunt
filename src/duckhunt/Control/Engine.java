@@ -20,6 +20,7 @@ public class Engine {
     private final double FPS = 60;
     private InputContainer inputCont;
     private static Engine instance;
+    private boolean running;
 
     private BaseLevelState currentLevel;
 
@@ -42,7 +43,7 @@ public class Engine {
                 double currentTime = timeInMicroseconds();
                 double accumulator = 0;
 
-                boolean running = true;
+                running = true;
                 int upsCount = 0;
                 int fpsCount = 0;
                 double lastSecond = 0;
@@ -74,6 +75,7 @@ public class Engine {
                     fpsCount++;
 
                 }
+                System.exit(0);
             }
         };
         threadForInitGame.start();
@@ -120,5 +122,10 @@ public class Engine {
             instance = new Engine();
         }
         return instance;
+    }
+    
+    public void stop(){
+        running = false;
+        
     }
 }
