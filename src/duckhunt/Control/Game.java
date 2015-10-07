@@ -1,5 +1,6 @@
 package duckhunt.Control;
 
+import duckhunt.Model.LevelFactory;
 import duckhunt.Model.Level1;
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.InputContainer;

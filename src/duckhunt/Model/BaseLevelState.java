@@ -5,7 +5,6 @@
  */
 package duckhunt.Model;
 
-import duckhunt.Control.LevelFactory;
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.ShootInput;
 import duckhunt.Control.Game;

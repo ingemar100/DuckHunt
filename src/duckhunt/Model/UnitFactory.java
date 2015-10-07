@@ -1,18 +1,19 @@
-package duckhunt.Control;
+package duckhunt.Model;
 
 import duckhunt.Model.Unit;
 import java.util.HashMap;
 
 public class UnitFactory {
 
-    HashMap<String, String> idMap = new HashMap();
+    HashMap<String, String> idMap = null;
     
     public UnitFactory(){
-        vul();
     }
 
     public Unit create(String id) {
-        String name = (String) idMap.get(id);
+        HashMap<String, String> map = getMap();
+        
+        String name = (String) map.get(id);
         Unit result = null;
 
         if (name != null) {
@@ -25,6 +26,14 @@ public class UnitFactory {
             }
         }
         return result;
+    }
+    
+    private HashMap<String, String> getMap(){
+        if (idMap == null){
+            idMap = new HashMap();
+            vul();
+        }
+        return idMap;
     }
 
     private void vul() {
