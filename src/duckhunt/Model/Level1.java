@@ -1,5 +1,6 @@
 package duckhunt.Model;
 
+import duckhunt.Boundary.AnimationPanel;
 import duckhunt.Boundary.InputContainer;
 import duckhunt.Boundary.ShootInput;
 import duckhunt.Control.Game;
@@ -33,7 +34,6 @@ public class Level1 extends BaseLevelState {
     private int nextUnitTime = MAX_SPAWN_TIME * 1000 * 1000; //microseconds
     private final int TIME_FOR_SPECIAL = 1000;
     private int scoreUntilSpecial = TIME_FOR_SPECIAL;
-    private int score = 0;
     private static final int SCORE_TO_WIN = 2500;
 
     private UnitManager unitManager;
@@ -41,8 +41,8 @@ public class Level1 extends BaseLevelState {
 
     public Level1() {
         super();
-        panel = new AnimationPanel();
         unitManager = new UnitManager(this);
+        panel = new AnimationPanel(unitManager, "../Images/background.png");
         openingScene();
     }
 
@@ -74,10 +74,10 @@ public class Level1 extends BaseLevelState {
         panel.repaint();
     }
 
-    public void addScore(int addedSCore) {
-        this.score += addedSCore;
+    public void addScore(int addedScore) {
+        super.addScore(addedScore);
         panel.setScore(this.score);
-        scoreUntilSpecial -= addedSCore;
+        scoreUntilSpecial -= addedScore;
     }
 
     /*
@@ -139,46 +139,5 @@ public class Level1 extends BaseLevelState {
 
     public ArrayList<Unit> getUnits() {
         return unitManager.getUnits();
-    }
-
-    public class AnimationPanel extends JPanel {
-
-        private JLabel scoreLabel = new JLabel("0");
-
-        private Image backgroundImage;
-
-        public AnimationPanel() {
-            this.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-            backgroundImage = new ImageIcon(getClass().getResource("../Images/background.png")).getImage();
-
-            Image im = Toolkit.getDefaultToolkit().createImage("src/duckhunt/Images/crosshair_64px.png");
-            Cursor c = Toolkit.getDefaultToolkit().createCustomCursor(im, new Point(16, 16), "custom cursor");
-            setCursor(c);
-
-            this.addMouseListener(InputContainer.getInstance());
-            this.add(new JLabel("Score: "));
-            this.add(scoreLabel);
-        }
-
-        public void setScore(int score) {
-            scoreLabel.setText("" + score);
-        }
-
-        @Override
-        // override a Swing JComponent's paintComponent, not the paint method
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            Graphics2D g2 = (Graphics2D) g;
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                    RenderingHints.VALUE_ANTIALIAS_ON);
-
-            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
-            List<Unit> units = (List<Unit>) unitManager.getUnits();
-            Iterator<Unit> it = units.iterator();
-            while (it.hasNext()) {
-                Unit u = it.next();
-                u.draw(g);
-            }
-        }
     }
 }

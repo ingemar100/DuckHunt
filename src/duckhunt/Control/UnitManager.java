@@ -7,6 +7,7 @@ package duckhunt.Control;
 
 import duckhunt.Model.Level1;
 import duckhunt.Boundary.ShootInput;
+import duckhunt.Model.BaseLevelState;
 import duckhunt.Model.Unit;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ import java.util.Random;
  */
 public class UnitManager {
     
-    private Level1 level;
+    private BaseLevelState level;
     private ArrayList<Unit> units = new ArrayList();
     
-    public UnitManager(Level1 level){
+    public UnitManager(BaseLevelState level){
         this.level = level;
     }
     

@@ -13,10 +13,6 @@ import duckhunt.Model.Unit;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- *
- * @author Ingemar
- */
 public class LevelFactory {
 
     private static ArrayList<String> map;
@@ -48,6 +44,7 @@ public class LevelFactory {
             ArrayList<String> arr = new ArrayList<>();
             arr.add("duckhunt.Model.Menu");
             arr.add("duckhunt.Model.Level1");
+            arr.add("duckhunt.Model.Level2");
 //            arr.add(menu);
 //            arr.add(level);
             map = arr;

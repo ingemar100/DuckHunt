@@ -15,5 +15,6 @@ public class Sound {
     public static final AudioClip COCK = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/cockgun-02.wav"));
     public static final AudioClip BONUS = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/BonusSound.wav"));
     public static final AudioClip MAINMENU = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/DuckHuntMainMenu.wav"));
+    public static final AudioClip BACKGROUND2 = Applet.newAudioClip(Sound.class.getResource("../SoundTrack/MaxRomeo.wav"));
 
 }

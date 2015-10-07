@@ -5,12 +5,9 @@ import java.util.HashMap;
 
 public class UnitFactory {
 
-    HashMap<String, String> idMap = null;
-    
-    public UnitFactory(){
-    }
+    private static HashMap<String, String> idMap = null;
 
-    public Unit create(String id) {
+    public static Unit create(String id) {
         HashMap<String, String> map = getMap();
         
         String name = (String) map.get(id);
@@ -28,7 +25,7 @@ public class UnitFactory {
         return result;
     }
     
-    private HashMap<String, String> getMap(){
+    private static HashMap<String, String> getMap(){
         if (idMap == null){
             idMap = new HashMap();
             vul();
@@ -36,7 +33,7 @@ public class UnitFactory {
         return idMap;
     }
 
-    private void vul() {
+    private static void vul() {
         idMap.put("Bird", "duckhunt.Model.Duck");
         idMap.put("Chase", "duckhunt.Model.Dog");
         idMap.put("Chaser", "duckhunt.Model.Goku");

@@ -40,9 +40,9 @@ public class Menu extends BaseLevelState{
         panel.addMouseListener(inputCont);
 
         mainMenuTitle = new ImageIcon(getClass().getResource("../Images/MainMenuTitle.jpg")).getImage();
-        start = new Button("../Images/StartButton.png", panel.getWidth() / 3, panel.getHeight() / 2, 300, 100);
-        options = new Button("../Images/OptionButton.png", panel.getWidth() / 3 - 42, panel.getHeight() / 2 + 80, 300, 100);
-        credits = new Button("../Images/CreditButton.png", panel.getWidth() / 3 - 42, panel.getHeight() / 2 + 160, 300, 100);
+        start = new Button("../Images/StartGameButton.png", panel.getWidth() / 3, panel.getHeight() / 2, 300, 100);
+        options = new Button("../Images/CreditsButton.png", panel.getWidth() / 3, panel.getHeight() / 2 + 80, 300, 100);
+        credits = new Button("../Images/ExitGame.png", panel.getWidth() / 3, panel.getHeight() / 2 + 160, 300, 100);
     }
 
     public void collide(List<ShootInput> inputs) {
@@ -70,32 +70,6 @@ public class Menu extends BaseLevelState{
     @Override
     public void render() {
         panel.repaint();
-    }
-
-    public void button() {
-        BufferedImage image = null;
-        try {
-            URL file = getClass().getResource("../Images/StartButton.png");
-            image = ImageIO.read(file);
-        } catch (IOException ioex) {
-            System.err.println("load error: " + ioex.getMessage());
-        }
-        ImageIcon icon = new ImageIcon(image);
-        JButton quitButton = new JButton(icon);
-        quitButton.setOpaque(false);
-        quitButton.setContentAreaFilled(false);
-        quitButton.setBorderPainted(false);
-        quitButton.setBorder(null);
-        panel.add(quitButton);
-
-        // add the listener to the jbutton to handle the "pressed" event
-        quitButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                //actie die uitgevoerd meot worden voor de game
-
-            }
-        });
     }
     
     public MenuPanel getPanel(){

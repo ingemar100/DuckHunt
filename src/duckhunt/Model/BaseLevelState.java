@@ -18,6 +18,7 @@ import javax.swing.JPanel;
  */
 abstract public class BaseLevelState {
 
+    protected int score = 0;
     protected Game game;
 
     public BaseLevelState() {
@@ -43,4 +44,8 @@ abstract public class BaseLevelState {
     }
 
     abstract public JPanel getPanel();
+
+    public void addScore(int addedScore) {
+        this.score += addedScore;
+    }
 }
