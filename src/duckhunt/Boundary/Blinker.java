@@ -3,7 +3,6 @@ package duckhunt.Boundary;
 import java.awt.*;
 import java.util.StringTokenizer;
 
-
 public class Blinker extends java.applet.Applet implements Runnable
 {
     Thread blinker = null;    // The thread that displays images

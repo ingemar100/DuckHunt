@@ -1,7 +1,6 @@
 package duckhunt.Model;
 
 import duckhunt.Control.Sound;
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.logging.Level;

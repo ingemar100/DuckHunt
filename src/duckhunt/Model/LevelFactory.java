@@ -1,17 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package duckhunt.Model;
 
-import duckhunt.Boundary.InputContainer;
 import duckhunt.Model.BaseLevelState;
-import duckhunt.Model.Menu;
-import duckhunt.Model.Level1;
-import duckhunt.Model.Unit;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class LevelFactory {
 

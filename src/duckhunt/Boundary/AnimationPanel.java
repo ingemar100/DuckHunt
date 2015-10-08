@@ -1,6 +1,5 @@
 package duckhunt.Boundary;
 
-import duckhunt.Boundary.InputContainer;
 import duckhunt.Control.UnitManager;
 import duckhunt.Model.Unit;
 import java.awt.Cursor;

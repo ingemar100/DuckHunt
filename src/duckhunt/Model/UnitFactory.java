@@ -1,6 +1,5 @@
 package duckhunt.Model;
 
-import duckhunt.Model.Unit;
 import java.util.HashMap;
 
 public class UnitFactory {

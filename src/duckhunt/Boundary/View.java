@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package duckhunt.Boundary;
 
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Ingemar
- */
 public class View {
     private JFrame frame;
     

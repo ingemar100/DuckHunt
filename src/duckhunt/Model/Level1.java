@@ -1,29 +1,13 @@
 package duckhunt.Model;
 
 import duckhunt.Boundary.AnimationPanel;
-import duckhunt.Boundary.InputContainer;
 import duckhunt.Boundary.ShootInput;
-import duckhunt.Control.Engine;
 import duckhunt.Control.Sound;
 import duckhunt.Control.UnitManager;
-import duckhunt.Model.BaseLevelState;
-import duckhunt.Model.Unit;
 import java.applet.AudioClip;
-import java.awt.Cursor;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Level1 extends BaseLevelState {
@@ -48,10 +32,10 @@ public class Level1 extends BaseLevelState {
 
     @Override
     public void update(double dt) {
-        if (score > SCORE_TO_WIN){
+        if (score > SCORE_TO_WIN) {
             changeLevel();
         }
-        
+
         time += dt;
 
         unitManager.update(dt);
@@ -87,30 +71,12 @@ public class Level1 extends BaseLevelState {
         if (scoreUntilSpecial <= 0) {
             scoreUntilSpecial = TIME_FOR_SPECIAL;
 
-            AudioClip music = getMusic();
-            Thread soundThreadDelay = new Thread() {
-                public void run() {
-                    music.stop();
-                    Sound.BONUS.play();
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(duckhunt.Model.Level1.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+            Sound.BONUS.play();
 
-                    Unit unit = factory.create("Special");
-                    unitManager.addUnit(unit);
-                    System.out.println(unit);
+            Unit unit = factory.create("Special");
+            unitManager.addUnit(unit);
+            System.out.println(unit);
 
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(duckhunt.Model.Level1.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    music.loop();
-                }
-            };
-            soundThreadDelay.start();
         } else if (time > nextUnitTime) {
             Unit unit = factory.create("Bird");
 

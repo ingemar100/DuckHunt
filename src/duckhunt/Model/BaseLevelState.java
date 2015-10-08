@@ -1,21 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package duckhunt.Model;
 
-import duckhunt.Boundary.Input;
 import duckhunt.Boundary.ShootInput;
 import duckhunt.Control.Engine;
 import java.applet.AudioClip;
 import java.util.List;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Ingemar
- */
 abstract public class BaseLevelState {
 
     protected int score = 0;

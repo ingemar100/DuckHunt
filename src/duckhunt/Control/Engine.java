@@ -1,15 +1,10 @@
 package duckhunt.Control;
 
 import duckhunt.Model.LevelFactory;
-import duckhunt.Model.Level1;
 import duckhunt.Boundary.Input;
 import duckhunt.Boundary.InputContainer;
 import duckhunt.Boundary.View;
-import duckhunt.Model.Menu;
 import duckhunt.Model.BaseLevelState;
-import java.awt.Toolkit;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import javax.swing.*;
 

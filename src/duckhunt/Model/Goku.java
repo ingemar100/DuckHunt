@@ -1,7 +1,5 @@
 package duckhunt.Model;
 
-import javax.swing.ImageIcon;
-
 public class Goku extends Unit {
 
     @Override
