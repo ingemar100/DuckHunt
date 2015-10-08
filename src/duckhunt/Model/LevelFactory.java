@@ -17,7 +17,10 @@ public class LevelFactory {
 
         int index = map.indexOf(currentLevel.getClass().getName());
 
-        if (index >= map.size() - 1) {
+        if (index < 0){
+            return firstLevel();
+        }
+        else if (index >= map.size() - 1) {
             return finished();
         } else {
             return getClassForName(map.get(index + 1));
@@ -59,6 +62,6 @@ public class LevelFactory {
     }
 
     private static BaseLevelState finished() {
-        return firstLevel();
+        return new FinishedLevel();
     }
 }
