@@ -34,7 +34,7 @@ public class FlyBehavior extends MoveBehavior {
 
     @Override
     public void move() {
-        if (timeSinceChange > 1000 * 500) {
+        if (timeSinceChange > 1000 * 200) {
             Random r = new Random();
             int i = r.nextInt(100) + 1;
             //chance of changing direction

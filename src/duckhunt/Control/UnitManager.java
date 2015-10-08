@@ -76,8 +76,8 @@ public class UnitManager {
     public void addUnit(Unit unit) {
         Random r = new Random();
 
-        int minX = (int) (level.getPanel().getWidth() * 0.4);
-        int xMargin = (int) (level.getPanel().getWidth() * 0.2);
+        int minX = (int) (level.getPanel().getWidth() * 0.2);
+        int xMargin = (int) (level.getPanel().getWidth() * 0.6);
         int x = (r.nextInt(xMargin) + minX);
 
         addUnit(unit, x, getSpawnHeight());
