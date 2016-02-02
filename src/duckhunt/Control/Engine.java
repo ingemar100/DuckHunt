@@ -32,7 +32,6 @@ public class Engine {
                 view.createAndShowUI();
                 
                 double t = 0;
-
                 final double dt = 1000000 / FPS;
 
                 double currentTime = timeInMicroseconds();

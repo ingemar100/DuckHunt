@@ -33,14 +33,10 @@ public class LevelFactory {
 
     private static ArrayList<String> getMap() {
         if (map == null) {
-//            Menu menu = new Menu();
-//            Level1 level = new Level1();
             ArrayList<String> arr = new ArrayList<>();
             arr.add("duckhunt.Model.Menu");
             arr.add("duckhunt.Model.Level1");
             arr.add("duckhunt.Model.Level2");
-//            arr.add(menu);
-//            arr.add(level);
             map = arr;
         }
 
