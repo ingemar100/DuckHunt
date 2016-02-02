@@ -35,7 +35,7 @@ public class FinishedLevel extends BaseLevelState{
     public FinishedLevel(){
         panel = new FinishedPanel();
         panel.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        gameOver = new ImageIcon(getClass().getResource("../Images/gameover.jpg")).getImage();
+        gameOver = new ImageIcon(getClass().getResource("../Images/nice.jpg")).getImage();
         panel.addMouseListener(InputContainer.getInstance());
     }
     
